@@ -5,8 +5,8 @@ import "../styles/globals.css";
 
 const theme = extendTheme({
   fonts: {
-    heading: "Montserrat, sans-serif",
-    body: "Montserrat, sans-serif",
+    heading: "HK Grotesk, sans-serif",
+    body: "HK Grotesk, sans-serif",
   },
   colors: {
     brand: {
