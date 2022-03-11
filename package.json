@@ -12,10 +12,12 @@
     "@emotion/react": "^11.8.1",
     "@emotion/styled": "^11.8.1",
     "framer-motion": "^6.2.8",
-    "next": "12.1.0",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
+    "next": "^12.1.0",
+    "react": "^17.0.2",
+    "react-countup": "^6.1.1",
+    "react-dom": "^17.0.2",
     "react-icons": "^4.3.1",
+    "react-visibility-sensor": "^5.1.1",
     "three": "^0.138.0"
   }
 }
