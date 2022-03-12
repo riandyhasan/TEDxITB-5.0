@@ -1,16 +1,15 @@
 import Head from "next/head";
-import { Flex } from "@chakra-ui/react";
 import Layout from "../components/navigation/Layout";
-import MerchForm from "../components/form/merch/Merch";
+import RegisterForm from "../components/pages/register/Register";
 
-export default function Home() {
+export default function Register() {
   return (
     <Layout>
       <Head>
         <title>TEDxITB 5.0</title>
       </Head>
 
-      <MerchForm />
+      <RegisterForm />
     </Layout>
   );
 }

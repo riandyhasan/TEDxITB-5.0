@@ -55,11 +55,13 @@ export default function Header({ ...props }) {
               </Box>
             );
           })}
-          <Box px="2rem" py="0.3rem" bg="brand.tedred" boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)" borderRadius="20px" cursor="pointer" fontSize="0.8em">
-            <Text color="white" textShadow="0px 4px 4px rgba(0, 0, 0, 0.25)">
-              Register
-            </Text>
-          </Box>
+          <Link href="/register">
+            <Box px="2rem" py="0.3rem" bg="brand.tedred" boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)" borderRadius="20px" cursor="pointer" fontSize="0.8em">
+              <Text color="white" textShadow="0px 4px 4px rgba(0, 0, 0, 0.25)">
+                Register
+              </Text>
+            </Box>
+          </Link>
         </Stack>
       </Box>
     </Flex>
