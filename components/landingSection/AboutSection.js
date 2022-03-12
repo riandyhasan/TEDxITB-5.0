@@ -46,7 +46,7 @@ const AboutSection = () => {
             <Text
               fontFamily="HKGrotesk"
               fontWeight="thin"
-              fontSize={{base: "1rem", sm: "1.5rem"}}
+              fontSize={{base: "0.85rem", sm: "1rem"}}
               color="#000000"
               textAlign="justify"
             >
@@ -81,7 +81,7 @@ const AboutSection = () => {
             <Text
               fontFamily="HKGrotesk"
               fontWeight="thin"
-              fontSize={{base: "1rem", sm: "1.5rem"}}
+              fontSize={{base: "0.85rem", sm: "1rem"}}
               color="#000000"
               textAlign="justify"
             >
