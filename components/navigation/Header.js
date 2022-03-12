@@ -4,6 +4,9 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { GrClose } from "react-icons/gr";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/router";
+import useUser from "../../hooks/user/user";
+import { getAuth, signOut } from "firebase/auth";
 
 const LINKS = [
   {
@@ -18,6 +21,17 @@ const LINKS = [
 
 export default function Header({ ...props }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const user = useUser();
+  const router = useRouter();
+
+  const handleSignOut = () => {
+    const auth = getAuth();
+    signOut(auth).then(() => {
+      router.push("/");
+    }).catch((error) => {
+        console.log(error);
+    });
+  }
 
   return (
     <Flex
@@ -55,13 +69,21 @@ export default function Header({ ...props }) {
               </Box>
             );
           })}
-          <Link href="/register">
+          {user.data ?
+            <Box px="2rem" py="0.3rem" bg="brand.tedred" boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)" borderRadius="20px" cursor="pointer" fontSize="0.8em" onClick={handleSignOut}>
+              <Text color="white" textShadow="0px 4px 4px rgba(0, 0, 0, 0.25)">
+                Log Out
+              </Text>
+            </Box> 
+            :
+            <Link href="/register">
             <Box px="2rem" py="0.3rem" bg="brand.tedred" boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)" borderRadius="20px" cursor="pointer" fontSize="0.8em">
               <Text color="white" textShadow="0px 4px 4px rgba(0, 0, 0, 0.25)">
                 Register
               </Text>
             </Box>
           </Link>
+        }
         </Stack>
       </Box>
     </Flex>

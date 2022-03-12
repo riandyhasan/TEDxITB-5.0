@@ -1,8 +1,4 @@
 import { useState } from "react";
-import { db } from "../utils/firebase";
-import { collection, doc, getDocs } from "firebase/firestore";
-import Layout from "../components/navigation/Layout";
-import MerchandiseText from "../public/assets/images/background/merchandise-text.png";
 import {
   Grid,
   GridItem,
@@ -23,33 +19,66 @@ import {
   ModalBody,
   ModalCloseButton,
   useDisclosure,
-  Option,
+  RadioGroup,
+  Radio,
+  Image,
+  useToast,
 } from "@chakra-ui/react";
-import Image from "next/image";
-import QtyPicker from "../components/inputs/QtyPicker";
+import QtyPicker from "../../inputs/QtyPicker";
+import getMerch from "../../../hooks/merch/merch";
+import useUser from "../../../hooks/user/user";
+import getCart from "../../../hooks/cart/cart"
+import { useRouter } from "next/router";
+import { db } from "../../../utils/firebase"
+import { addDoc, collection } from "firebase/firestore"; 
 
-function MerchandisePage({ merchandise = [], categories = [], extras = [] }) {
+
+
+export default function MerchandisePage() {
   const [searchBarInput, setSearchBarInput] = useState("");
   const [categoryInput, setCategoryInput] = useState("all");
   const [showOpen, setShowOpen] = useState(0);
+  const [id, setId] = useState("");
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState(0);
+  const [image, setImage] = useState([]);
+  const [type, setType] = useState([]);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isMobile] = useMediaQuery("(max-width: 768px)");
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1
+  };
+
+  const data = getMerch();
+  const merchandise = data.merch;
+  const dataCart = getCart();
+  const cart = dataCart.cart;
+  const loading = data.loading;
+  let unfiltered_category = []; 
+  data.merch?.map((item) => (item.category?.map((i) => (unfiltered_category.push(i)))));
+  const categories = [...new Set(unfiltered_category)];
+
   const theme = useTheme();
   const merchandiseController = (merch) => {
     // if (categoryInput !== "") {
-    //   return merch.nama.toLowerCase().includes(searchBarInput.toLowerCase());
+    //   return merch.name.toLowerCase().includes(searchBarInput.toLowerCase());
     // } else {
     //   return (
-    //     merch.nama.toLowerCase().includes(searchBarInput.toLowerCase()) &&
-    //     merch.kategori.includes(categoryInput)
+    //     merch.name.toLowerCase().includes(searchBarInput.toLowerCase()) &&
+    //     merch.category.includes(categoryInput)
     //   );
     // }
 
     const inSearch =
       searchBarInput === "" ||
-      merch.nama.toLowerCase().includes(searchBarInput.toLowerCase());
+      merch.name.toLowerCase().includes(searchBarInput.toLowerCase());
     const inFilter =
-      categoryInput === "all" || merch.kategori.includes(categoryInput);
+      categoryInput === "all" || merch.category.includes(categoryInput);
     return inSearch && inFilter;
   };
 
@@ -58,7 +87,6 @@ function MerchandisePage({ merchandise = [], categories = [], extras = [] }) {
   const handleCategoryInputChange = (e) => setCategoryInput(e.target.value);
 
   return (
-    <Layout>
       <Container maxW='container.xl' fontFamily={theme.fonts.body}>
         {isMobile ? null : <BackgroundMerchandiseText />}
         <Heading
@@ -102,7 +130,7 @@ function MerchandisePage({ merchandise = [], categories = [], extras = [] }) {
                 value='all'
                 style={{ backgroundColor: theme.colors.brand.tedred }}
               >
-                all
+                All
               </option>
               {categories.map((c) => (
                 <option
@@ -115,13 +143,19 @@ function MerchandisePage({ merchandise = [], categories = [], extras = [] }) {
               ))}
             </Select>
           </Flex>
-          <ShoppingCartLogo />
+          <ShoppingCartLogo cart={cart}         
+        />
         </Flex>
         <MerchandiseDetail
           isOpen={isOpen}
           onClose={onClose}
-          merch={merchandise[showOpen]}
           isMobile={isMobile}
+          id={id}
+          name={name}
+          description={description}
+          price={price}
+          image={image}
+          type={type}
         />
         <Grid
           templateColumns={["18em", "18em 18em", "18em 18em", "18em 18em 18em"]}
@@ -132,14 +166,20 @@ function MerchandisePage({ merchandise = [], categories = [], extras = [] }) {
             merchandise.map((merch) =>
               merchandiseController(merch) ? (
                 <GridItem
-                  key={merch.id + 1}
+                  key={merch.id}
                   display='flex'
                   flexDirection='column'
                   gap='1em'
                   cursor='pointer'
                   onClick={() => {
-                    setShowOpen(merch.id);
+                    setShowOpen(true);
                     onOpen();
+                    setId(merch.id);
+                    setName(merch.name);
+                    setDescription(merch.description);
+                    setPrice(merch.price);
+                    setImage(merch.image);
+                    setType(merch.type ? merch.type : []);
                   }}
                 >
                   <Box
@@ -149,12 +189,12 @@ function MerchandisePage({ merchandise = [], categories = [], extras = [] }) {
                     height='18em'
                   >
                     <Image
-                      src={merch.gambar}
-                      layout='responsive'
-                      objectFit='contain'
-                      width='100%'
-                      height='100%'
-                    />
+                    src={merch.image[0]}
+                    layout='responsive'
+                    objectFit='contain'
+                    width='100%'
+                    height='100%'
+                  />
                   </Box>
                   <Box>
                     <Text
@@ -163,10 +203,10 @@ function MerchandisePage({ merchandise = [], categories = [], extras = [] }) {
                       letterSpacing='2px'
                       textAlign='center'
                     >
-                      {merch.nama}
+                      {merch.name}
                     </Text>
                     <Text fontWeight={400} fontSize='md' textAlign='center'>
-                      {formatter.format(String(merch.harga))}
+                      {formatter.format(String(merch.price))}
                     </Text>
                   </Box>
                 </GridItem>
@@ -174,19 +214,92 @@ function MerchandisePage({ merchandise = [], categories = [], extras = [] }) {
             )}
         </Grid>
       </Container>
-    </Layout>
   );
 }
 
-function MerchandiseDetail({ merch, isOpen, onClose, isMobile }) {
+function MerchandiseDetail({ id, name, description, price, image , type, isOpen, onClose, isMobile }) {
   const [qty, setQty] = useState(0);
-
+  const [imgIdx, setImgIdx] = useState("1");
+  const router = useRouter();
+  const user = useUser();
   const theme = useTheme();
+  const toast = useToast();
+
+  const buyNow = async () =>  {
+    if(user.data){
+        try{
+        await addDoc(collection(db, `user/${user.userID}/cart`), {
+            idItem: id,
+            name: name,
+            type: type ? parseInt(imgIdx) - 1 : null,
+            price: price,
+            image: image[parseInt(imgIdx) - 1],
+            quantity: qty,
+          });
+        toast({
+        title: 'Success!',
+        description: "Item has add to your cart!",
+        status: 'success',
+        duration: 2000,
+        isClosable: true,
+        })
+        router.push("/merchandise/checkout");
+        }catch(e){
+            var msg = e.message;
+            const error = msg.replace("Firebase:", "");
+            toast({
+                title: 'Error!',
+                description: error,
+                status: 'error',
+                duration: 2000,
+                isClosable: true,
+            })
+        }  
+    }else{
+        router.push("/login");
+    }
+  }
+
+  const addToCart = async () =>  {
+    if(user.data){
+        try{
+        await addDoc(collection(db, `user/${user.userID}/cart`), {
+            idItem: id,
+            name: name,
+            type: type ? parseInt(imgIdx) - 1 : null,
+            price: price,
+            image: image[parseInt(imgIdx) - 1],
+            quantity: qty,
+          });
+        toast({
+        title: 'Success!',
+        description: "Item has add to your cart!",
+        status: 'success',
+        duration: 2000,
+        isClosable: true,
+        })
+        }catch(e){
+            var msg = e.message;
+            const error = msg.replace("Firebase:", "");
+            toast({
+                title: 'Error!',
+                description: error,
+                status: 'error',
+                duration: 2000,
+                isClosable: true,
+            })
+        }  
+    }else{
+        router.push("/login");
+    }
+  }
+
   return (
     <Modal
       onClose={() => {
         setQty(0);
         onClose();
+        setImgIdx("1");
       }}
       isCentered
       isOpen={isOpen}
@@ -198,13 +311,13 @@ function MerchandiseDetail({ merch, isOpen, onClose, isMobile }) {
         <ModalBody padding='0'>
           <Flex direction={isMobile ? "column" : "row"} margin='0'>
             <Box height={isMobile ? "40%" : "100%"} width='40%'>
-              <Image
-                src={merch.gambar}
-                layout='responsive'
-                objectFit='contain'
-                width='100%'
-                height='100%'
-              />
+            <Image
+            src={image[parseInt(imgIdx) - 1]}
+            layout='responsive'
+            objectFit='contain'
+            width='100%'
+            height='100%'
+          />
             </Box>
             <Flex
               padding='4%'
@@ -213,18 +326,33 @@ function MerchandiseDetail({ merch, isOpen, onClose, isMobile }) {
               width={isMobile ? "100%" : "50%"}
             >
               <Box>
-                <Heading size='lg'>{merch.nama}</Heading>
-                <Heading size='sm'>{formatter.format(merch.harga)}</Heading>
+                <Heading size='lg'>{name}</Heading>
+                <Heading size='sm'>{formatter.format(price)}</Heading>
                 <br></br>
                 <Heading size='sm'>Product description</Heading>
-                <Text>{merch?.deskripsi}</Text>
+                <Text fontSize="0.75em">{description}</Text>
+                {type && type.length ?
+                <RadioGroup my="1rem" onChange={setImgIdx} value={imgIdx}>
+                  <Grid gridTemplateColumns="repeat(3, 1fr)" gap={6}>
+                    {image.map((item, i) => (
+                      <Radio value={(i+1).toString()}>
+                        <Box w="3rem" h="3rem" filter="drop-shadow(0px 0px 0px rgba(0, 0, 0, 0))">
+                          <Image src={item} />
+                        </Box>
+                      </Radio>
+                    ))}
+                  </Grid>
+                </RadioGroup>
+                :
+                null
+                }
               </Box>
               <Flex direction='column' gap='1em'>
                 <QtyPicker qty={qty} setQty={setQty} />
                 <Flex justify='space-between' width='100%'>
                   <Heading size='sm'>Subtotal</Heading>
                   <Heading size='sm'>
-                    {formatter.format(qty * merch.harga)}
+                    {formatter.format(qty * price)}
                   </Heading>
                 </Flex>
                 <Flex justify='flex-end' gap='2em' width='100%'>
@@ -232,6 +360,8 @@ function MerchandiseDetail({ merch, isOpen, onClose, isMobile }) {
                     backgroundColor={theme.colors.brand.tedred}
                     colorScheme='red'
                     size='md'
+                    disabled={qty === 0}
+                    onClick={buyNow}
                   >
                     Buy Now
                   </Button>
@@ -241,6 +371,7 @@ function MerchandiseDetail({ merch, isOpen, onClose, isMobile }) {
                     background='white'
                     size='md'
                     disabled={qty === 0}
+                    onClick={addToCart}
                   >
                     Add to Cart
                   </Button>
@@ -260,22 +391,51 @@ const formatter = Intl.NumberFormat("en-US", {
 });
 
 function BackgroundMerchandiseText() {
+  const MerchandiseText = "/assets/images/background/merchandise-text.png";
   return (
     <Box width='18em' position='absolute' right={0} top='4.5em'>
-      <Image src={MerchandiseText} alt='merchandise' />
-      <Image src={MerchandiseText} alt='merchandise' />
-      <Image src={MerchandiseText} alt='merchandise' />
+      <Image src={MerchandiseText} alt='merchandise' width='18em'/>
+      <Image src={MerchandiseText} alt='merchandise' width='18em'/>
+      <Image src={MerchandiseText} alt='merchandise' width='18em' />
     </Box>
   );
 }
 
-function ShoppingCartLogo({ onClick = () => {} }) {
+function ShoppingCartLogo({ cart  } ) {
+  const router = useRouter();
+  const user = useUser();
+  const toast = useToast();
+
+  const handleOnclick = () => {
+      if (!user.data){
+        toast({
+            title: 'You need to login first!',
+            description: "To access shopping cart you need to login first",
+            status: 'error',
+            duration: 4000,
+            isClosable: true,
+            })
+        }
+      else if(!cart || cart.length < 1){
+        toast({
+            title: 'Add your item!',
+            description: "Please add item first before checkout",
+            status: 'error',
+            duration: 4000,
+            isClosable: true,
+            })
+      }
+      else{
+          router.push("/merchandise/checkout");
+      }
+  }
   return (
+    <>
     <IconButton
       colorScheme='whiteAlpha'
       margin='auto'
       padding='0'
-      onClick={onClick}
+      onClick={handleOnclick}
       icon={
         <svg
           width='40'
@@ -284,6 +444,7 @@ function ShoppingCartLogo({ onClick = () => {} }) {
           fill='none'
           xmlns='http://www.w3.org/2000/svg'
         >
+
           <path
             d='M37.2499 27.6666H10.4166C9.90825 27.6666 9.42074 27.4647 9.0613 27.1052C8.70185 26.7458 8.49992 26.2583 8.49992 25.7499C8.49992 25.2416 8.70185 24.7541 9.0613 24.3946C9.42074 24.0352 9.90825 23.8333 10.4166 23.8333H30.4266C31.7082 23.8333 32.953 23.4052 33.9635 22.617C34.974 21.8287 35.6922 20.7255 36.0041 19.4824L39.1666 7.04325C39.2384 6.76037 39.2446 6.46483 39.1848 6.17916C39.125 5.8935 39.0008 5.62527 38.8216 5.39492C38.6352 5.15866 38.3958 4.9696 38.1227 4.84307C37.8497 4.71654 37.5507 4.65608 37.2499 4.66659H9.95659C9.56115 3.54812 8.82945 2.57933 7.86179 1.89305C6.89414 1.20677 5.7379 0.836586 4.55159 0.833252H2.74992C2.24159 0.833252 1.75408 1.03519 1.39463 1.39463C1.03519 1.75408 0.833252 2.24159 0.833252 2.74992C0.833252 3.25825 1.03519 3.74576 1.39463 4.10521C1.75408 4.46465 2.24159 4.66659 2.74992 4.66659H4.55159C4.98942 4.65383 5.41841 4.79142 5.76715 5.05646C6.11588 5.3215 6.36331 5.69799 6.46825 6.12325L6.58325 7.04325L9.89909 19.9999C8.37409 20.0685 6.93882 20.7402 5.90901 21.867C4.8792 22.9939 4.33921 24.4837 4.40784 26.0087C4.47646 27.5337 5.14808 28.9689 6.27494 29.9987C7.40179 31.0286 8.89159 31.5685 10.4166 31.4999H10.7616C10.4464 32.3684 10.3451 33.3001 10.4663 34.216C10.5875 35.132 10.9277 36.0052 11.4579 36.7619C11.9882 37.5185 12.693 38.1361 13.5127 38.5626C14.3323 38.989 15.2427 39.2117 16.1666 39.2117C17.0905 39.2117 18.0009 38.989 18.8205 38.5626C19.6401 38.1361 20.3449 37.5185 20.8752 36.7619C21.4055 36.0052 21.7457 35.132 21.8669 34.216C21.9881 33.3001 21.8868 32.3684 21.5716 31.4999H26.0949C25.7797 32.3684 25.6784 33.3001 25.7996 34.216C25.9208 35.132 26.261 36.0052 26.7913 36.7619C27.3216 37.5185 28.0264 38.1361 28.846 38.5626C29.6657 38.989 30.576 39.2117 31.4999 39.2117C32.4239 39.2117 33.3342 38.989 34.1538 38.5626C34.9735 38.1361 35.6783 37.5185 36.2086 36.7619C36.7389 36.0052 37.079 35.132 37.2002 34.216C37.3214 33.3001 37.2201 32.3684 36.9049 31.4999H37.2499C37.7583 31.4999 38.2458 31.298 38.6052 30.9385C38.9647 30.5791 39.1666 30.0916 39.1666 29.5833C39.1666 29.0749 38.9647 28.5874 38.6052 28.228C38.2458 27.8685 37.7583 27.6666 37.2499 27.6666ZM34.7966 8.49992L32.2858 18.5433C32.1808 18.9685 31.9334 19.345 31.5846 19.61C31.2359 19.8751 30.8069 20.0127 30.3691 19.9999H13.8283L10.9533 8.49992H34.7966ZM16.1666 35.3333C15.7875 35.3333 15.4169 35.2208 15.1017 35.0102C14.7865 34.7996 14.5409 34.5003 14.3958 34.1501C14.2507 33.7998 14.2128 33.4145 14.2867 33.0427C14.3607 32.6709 14.5432 32.3293 14.8113 32.0613C15.0793 31.7932 15.4209 31.6107 15.7927 31.5367C16.1645 31.4628 16.5498 31.5007 16.9001 31.6458C17.2503 31.7909 17.5496 32.0365 17.7602 32.3517C17.9708 32.6669 18.0833 33.0375 18.0833 33.4166C18.0833 33.9249 17.8813 34.4124 17.5219 34.7719C17.1624 35.1313 16.6749 35.3333 16.1666 35.3333ZM31.4999 35.3333C31.1208 35.3333 30.7503 35.2208 30.4351 35.0102C30.1199 34.7996 29.8742 34.5003 29.7292 34.1501C29.5841 33.7998 29.5461 33.4145 29.6201 33.0427C29.694 32.6709 29.8766 32.3293 30.1446 32.0613C30.4127 31.7932 30.7542 31.6107 31.126 31.5367C31.4978 31.4628 31.8832 31.5007 32.2334 31.6458C32.5836 31.7909 32.883 32.0365 33.0936 32.3517C33.3042 32.6669 33.4166 33.0375 33.4166 33.4166C33.4166 33.9249 33.2147 34.4124 32.8552 34.7719C32.4958 35.1313 32.0083 35.3333 31.4999 35.3333Z'
             fill='#E62B1E'
@@ -291,42 +452,7 @@ function ShoppingCartLogo({ onClick = () => {} }) {
         </svg>
       }
     />
+   {cart && cart.length ? <Box cursor="pointer" w="15px" h="15px" borderRadius="50px" bg="red" d='flex' justifyContent="center" alignItems="center" padding="2px" color="white" onClick={() => router.push("/merchandise/checkout")}>{cart.length}</Box> : null}
+    </>
   );
 }
-
-export async function getStaticProps() {
-  try {
-    const response = await getDocs(collection(db, "merchandise"));
-    const merchandise = response.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-    const c = {};
-    merchandise.forEach((merch) => {
-      merch.kategori.forEach((k) => {
-        c[k] = "";
-      });
-    });
-    const categories = Object.keys(c);
-    const extras = c;
-    return {
-      props: {
-        merchandise: merchandise,
-        categories: categories,
-        error: null,
-        extras: extras,
-      },
-      revalidate: 300,
-    };
-  } catch (err) {
-    return {
-      props: {
-        error: err,
-        merchandise: [],
-        categories: [],
-      },
-    };
-  }
-}
-
-export default MerchandisePage;
