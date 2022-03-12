@@ -12,4 +12,124 @@ a {
 
 * {
   box-sizing: border-box;
+  --chakra-ring-color: rgba(255, 255, 255, 0);
+}
+
+/*HK Grotesk Fonts*/
+
+@font-face {
+  font-family: HKGrotesk;
+  src: url(../public/assets/fonts/HKGrotesk_3001/WEB/HKGrotesk-ExtraLight.woff);
+  font-weight: 100;
+  font-style: normal;
+}
+@font-face {
+  font-family: HKGrotesk;
+  src: url(../public/assets/fonts/HKGrotesk_3001/WEB/HKGrotesk-ExtraLightItalic.woff);
+  font-weight: 100;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: HKGrotesk;
+  src: url(../public/assets/fonts/HKGrotesk_3001/WEB/HKGrotesk-Light.woff);
+  font-weight: 200;
+  font-style: normal;
+}
+@font-face {
+  font-family: HKGrotesk;
+  src: url(../public/assets/fonts/HKGrotesk_3001/WEB/HKGrotesk-LightItalic.woff);
+  font-weight: 200;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: HKGrotesk;
+  src: url(../public/assets/fonts/HKGrotesk_3001/WEB/HKGrotesk-Thin.woff);
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: HKGrotesk;
+  src: url(../public/assets/fonts/HKGrotesk_3001/WEB/HKGrotesk-ThinItalic.woff);
+  font-weight: 300;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: HKGrotesk;
+  src: url(../public/assets/fonts/HKGrotesk_3001/WEB/HKGrotesk-Regular.woff);
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: HKGrotesk;
+  src: url(../public/assets/fonts/HKGrotesk_3001/WEB/HKGrotesk-Italic.woff);
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: HKGrotesk;
+  src: url(../public/assets/fonts/HKGrotesk_3001/WEB/HKGrotesk-Medium.woff);
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: HKGrotesk;
+  src: url(../public/assets/fonts/HKGrotesk_3001/WEB/HKGrotesk-MediumItalic.woff);
+  font-weight: 500;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: HKGrotesk;
+  src: url(../public/assets/fonts/HKGrotesk_3001/WEB/HKGrotesk-SemiBold.woff);
+  font-weight: 600;
+  font-style: normal;
+}
+@font-face {
+  font-family: HKGrotesk;
+  src: url(../public/assets/fonts/HKGrotesk_3001/WEB/HKGrotesk-SemiBoldItalic.woff);
+  font-weight: 600;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: HKGrotesk;
+  src: url(../public/assets/fonts/HKGrotesk_3001/WEB/HKGrotesk-Bold.woff);
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: HKGrotesk;
+  src: url(../public/assets/fonts/HKGrotesk_3001/WEB/HKGrotesk-BoldItalic.woff);
+  font-weight: 700;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: HKGrotesk;
+  src: url(../public/assets/fonts/HKGrotesk_3001/WEB/HKGrotesk-ExtraBold.woff);
+  font-weight: 800;
+  font-style: normal;
+}
+@font-face {
+  font-family: HKGrotesk;
+  src: url(../public/assets/fonts/HKGrotesk_3001/WEB/HKGrotesk-ExtraBoldItalic.woff);
+  font-weight: 800;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: HKGrotesk;
+  src: url(../public/assets/fonts/HKGrotesk_3001/WEB/HKGrotesk-Black.woff);
+  font-weight: 900;
+  font-style: normal;
+}
+@font-face {
+  font-family: HKGrotesk;
+  src: url(../public/assets/fonts/HKGrotesk_3001/WEB/HKGrotesk-BlackItalic.woff);
+  font-weight: 900;
+  font-style: italic;
 }
