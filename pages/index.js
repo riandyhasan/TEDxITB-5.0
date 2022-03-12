@@ -6,6 +6,7 @@ import NumbersSection from "../components/landingSection/NumbersSection";
 import HistorySection from "../components/landingSection/HistorySection";
 import AboutSection from "../components/landingSection/AboutSection";
 
+
 export default function Home() {
   return (
     <Layout>
@@ -19,6 +20,7 @@ export default function Home() {
         <HistorySection />
         <AboutSection />
       </Flex>
+
     </Layout>
   );
 }
