@@ -2,8 +2,7 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: HK Grotesk;
 }
 
 a {
@@ -13,6 +12,7 @@ a {
 
 * {
   box-sizing: border-box;
+  --chakra-ring-color: rgba(255, 255, 255, 0);
 }
 
 /*HK Grotesk Fonts*/
@@ -133,4 +133,3 @@ a {
   font-weight: 900;
   font-style: italic;
 }
-
