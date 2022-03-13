@@ -88,7 +88,7 @@ export default function MerchForm() {
   const user = useUser();
 
   let item = [];
-  cart?.map((i) => item.push(`${i.name}, ${i.quantity}`))
+  cart?.map((i) => item.push(`${i.name} - ${i.type}, ${i.quantity}`))
 
   const validateForm = () => {
     let err = "";
