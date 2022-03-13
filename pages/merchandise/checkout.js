@@ -1,7 +1,6 @@
 import Head from "next/head";
 import Layout from "../../components/navigation/Layout";
-import MerchForm from "../../components/form/merch/Merch"
-
+import MerchForm from "../../components/form/merch/Merch";
 
 export default function MerchandiseForm() {
   return (

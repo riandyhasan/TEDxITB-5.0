@@ -5,7 +5,13 @@ import Footer from "./Footer";
 
 export default function Layout(props) {
   return (
-    <Flex direction="column" align="center" m="0 auto" overflowX="hidden" {...props}>
+    <Flex
+      direction="column"
+      align="center"
+      m="0 auto"
+      overflowX="hidden"
+      {...props}
+    >
       <Header />
       {props.children}
       <Footer />
