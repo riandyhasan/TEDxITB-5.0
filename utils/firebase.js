@@ -2,13 +2,13 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCcwRardb8MdnBAbgKL5fY1tFX5uIvq9Hk",
-  authDomain: "tedxitb-32001.firebaseapp.com",
-  databaseURL: "https://tedxitb-32001-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "tedxitb-32001",
-  storageBucket: "tedxitb-32001.appspot.com",
-  messagingSenderId: "587310095515",
-  appId: "1:587310095515:web:a07d04d5d60478be4fba3e",
+  apiKey: "AIzaSyBhVXUZK3IlwtSIKezH-QSFAkapwrPbWgE",
+  authDomain: "tedx2-4e978.firebaseapp.com",
+  projectId: "tedx2-4e978",
+  storageBucket: "tedx2-4e978.appspot.com",
+  messagingSenderId: "490621607208",
+  appId: "1:490621607208:web:92cbd375bfd019ae5a041d",
+  measurementId: "G-JR36HQCFM2"
 };
 
 const app = initializeApp(firebaseConfig);
