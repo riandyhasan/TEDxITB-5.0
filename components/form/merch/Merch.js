@@ -18,41 +18,41 @@ const paymentmethod = [
     w: "91px",
     h: "29px",
   },
-  {
-    name: "bni",
-    value: "2",
-    image: "/assets/images/payment-method/bni.png",
-    w: "101px",
-    h: "31px",
-  },
-  {
-    name: "gopay",
-    value: "3",
-    image: "/assets/images/payment-method/gopay.png",
-    w: "101px",
-    h: "31px",
-  },
-  {
-    name: "mandiri",
-    value: "4",
-    image: "/assets/images/payment-method/mandiri.png",
-    w: "130px",
-    h: "40px",
-  },
-  {
-    name: "dana",
-    value: "5",
-    image: "/assets/images/payment-method/dana.png",
-    w: "120px",
-    h: "37px",
-  },
-  {
-    name: "ovo",
-    value: "6",
-    image: "/assets/images/payment-method/ovo.png",
-    w: "70px",
-    h: "22px",
-  },
+  // {
+  //   name: "bni",
+  //   value: "2",
+  //   image: "/assets/images/payment-method/bni.png",
+  //   w: "101px",
+  //   h: "31px",
+  // },
+  // {
+  //   name: "gopay",
+  //   value: "3",
+  //   image: "/assets/images/payment-method/gopay.png",
+  //   w: "101px",
+  //   h: "31px",
+  // },
+  // {
+  //   name: "mandiri",
+  //   value: "4",
+  //   image: "/assets/images/payment-method/mandiri.png",
+  //   w: "130px",
+  //   h: "40px",
+  // },
+  // {
+  //   name: "dana",
+  //   value: "5",
+  //   image: "/assets/images/payment-method/dana.png",
+  //   w: "120px",
+  //   h: "37px",
+  // },
+  // {
+  //   name: "ovo",
+  //   value: "6",
+  //   image: "/assets/images/payment-method/ovo.png",
+  //   w: "70px",
+  //   h: "22px",
+  // },
 ];
 
 export default function MerchForm() {
@@ -209,6 +209,7 @@ export default function MerchForm() {
     payment: paymentName,
     proof: proof
     })
+
     toast({
       title: 'Success!',
       description: 'Your form has been submitted successfully!',
@@ -217,6 +218,14 @@ export default function MerchForm() {
       isClosable: true,
   })
   cart?.map((i) => deleteItem(i.id))
+  // await addDoc(collection(db, "mail"), {
+  //   to: user.profile.email,
+  //   from: 'contact.tedxitb@gmail.com',
+  //   message: {
+  //     subject: 'TEDxITB Merchandise Invoice',
+  //     html: 'This is an <code>HTML</code> email body.',
+  //   },
+  // })
   router.push("/");
   }catch(e) {
     console.log(e);
@@ -239,9 +248,9 @@ const checkout = async () => {
     const storage = getStorage();
     const today =  new Date();
     const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-    const storageRef = ref(storage, `merch-proof/${name}_${date}.jpg`);
+    const storageRef = ref(storage, `merch-proof/${name}-${date}.jpg`);
     uploadBytes(storageRef, acceptedFiles[0]).then((snapshot) => {
-      getDownloadURL(ref(storage, `merch-proof/${name}_${date}.jpg`)).then((url) => {
+      getDownloadURL(ref(storage, `merch-proof/${name}-${date}.jpg`)).then((url) => {
         proof = url;
         console.log(url);
         addToFirestore();
@@ -267,6 +276,8 @@ const formatter = Intl.NumberFormat("en-US", {
   style: "currency",
   currency: "IDR",
 });
+
+console.log(acceptedFiles)
 
   return (
     <Flex w="100%" padding="2rem" bg="linear-gradient(180deg, #FFFFFF 23.76%, #E62B1E 44.24%)">
@@ -399,6 +410,7 @@ const formatter = Intl.NumberFormat("en-US", {
                 <Box fontSize="0.65em" mb="0.7rem" mt="-0.5rem">
                   Please choose your payment method.
                 </Box>
+                <Box fontSize="0.65em" mb="0.7rem" mt="-0.5rem">BCA 1481793578 a.n Raisa Rasyida Putri Setiawan</Box>
               </FormControl>
               <Box border="2px solid #000000" borderRadius="19px" padding="1rem">
                 <RadioGroup value={payment} onChange={setPayment}>
