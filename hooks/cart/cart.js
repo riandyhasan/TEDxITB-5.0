@@ -25,7 +25,7 @@ export default function getMerch(){
 
   useEffect(() => {
     getData()
-  }, [cart]);
+  }, []);
 
   return { cart, error, loading};
 };

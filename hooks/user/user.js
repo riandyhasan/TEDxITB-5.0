@@ -30,7 +30,7 @@ export default function useUser(){
             setUser({ data: null, loading: false });
         }
       });
-  }, [user]);
+  }, []);
 
   return user;
 };

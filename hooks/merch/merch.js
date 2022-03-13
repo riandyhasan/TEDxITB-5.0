@@ -23,7 +23,7 @@ export default function getMerch(){
 
   useEffect(() => {
     getData()
-  }, [merch]);
+  }, []);
 
   return { merch, error, loading};
 };
