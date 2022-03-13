@@ -59,7 +59,7 @@ export default function MerchForm() {
 
   let itemCost = 0;
   const [shippingCost, setShippingCost] = useState(0);
-  const [referralcodeDiscount, SetReferralCodeDiscount] = useState(0);
+  const [referralcodeDiscount, setReferralCodeDiscount] = useState(0);
   const [shipping, setShipping] = useState("shipping");
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
@@ -74,6 +74,8 @@ export default function MerchForm() {
   const [proof, setProof] = useState("");
   const toast = useToast();
   const router = useRouter();
+
+  const refCode = ["AGL5.0","BRI5.0","DEA5.0","IZP5.0","NFL5.0","PET5.0","POY5.0","TIM5.0"]
 
 
   const { acceptedFiles, fileRejections, getRootProps, getInputProps } =
@@ -172,7 +174,7 @@ export default function MerchForm() {
     }
   }
 
- const addToFirestore = async () => {
+ const addToFirestore = async ({url}) => {
    try{
      const paymentName = getPaymentName();
   await addDoc(collection(db, "transaction"), {
@@ -193,7 +195,7 @@ export default function MerchForm() {
     total: itemCost +  (shippingCost && shippingCost != "" ? parseInt(shippingCost) : 0) - referralcodeDiscount,
     referralcode: referralcode,
     payment: paymentName,
-    proof: proof
+    proof: url
     })
     toast({
       title: 'Success!',
@@ -228,9 +230,7 @@ const checkout = async () => {
     const storageRef = ref(storage, `merch-proof/${name}-${date}.jpg`);
     uploadBytes(storageRef, acceptedFiles[0]).then((snapshot) => {
       getDownloadURL(ref(storage, `merch-proof/${name}-${date}.jpg`)).then((url) => {
-        setProof(url);
-        console.log(proof)
-        addToFirestore();
+        addToFirestore(url);
     })
     });
 }
@@ -370,7 +370,14 @@ const formatter = Intl.NumberFormat("en-US", {
                     <ListItem>Referral code can not be used during promo session.</ListItem>
                   </UnorderedList>
                 </Box>
-                <Input fontSize="0.75em" id="referralcode" placeholder="XXXXXXXX" borderRadius="19px" border="2px" borderColor="black" value={referralcode} onChange={(e) => setReferralCode(e.target.value)}/>
+                <Input fontSize="0.75em" id="referralcode" placeholder="XXXXXXXX" borderRadius="19px" border="2px" borderColor="black" value={referralcode} 
+                onChange={(e) => {
+                  setReferralCode(e.target.value)
+                  if (refCode.includes(referralcode)){
+                    setReferralCodeDiscount(5000);
+                  }
+                }
+                }/>
               </FormControl>
             </GridItem>
             <GridItem>
