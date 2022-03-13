@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Flex, Box, Heading, Grid, GridItem, FormControl, FormLabel, Input, Text, Image, ListItem, UnorderedList, RadioGroup, Radio, Select, Divider, Center, useToast } from "@chakra-ui/react";
 import { db } from "../../../utils/firebase"
 import { doc, collection, addDoc, deleteDoc, updateDoc } from "firebase/firestore"; 
@@ -58,6 +58,7 @@ const paymentmethod = [
 export default function MerchForm() {
 
   let itemCost = 0;
+  var proof = "";
   const [shippingCost, setShippingCost] = useState(0);
   const [referralcodeDiscount, setReferralCodeDiscount] = useState(0);
   const [shipping, setShipping] = useState("shipping");
@@ -71,7 +72,6 @@ export default function MerchForm() {
   const [phone, setPhone] = useState("");
   const [referralcode, setReferralCode] = useState("");
   const [payment, setPayment] = useState("1");
-  const [proof, setProof] = useState("");
   const toast = useToast();
   const router = useRouter();
 
@@ -90,7 +90,19 @@ export default function MerchForm() {
   const user = useUser();
 
   let item = [];
-  cart?.map((i) => item.push(`${i.name} - ${i.type}, ${i.quantity}`))
+  cart?.map((i) => item.push(`${i.name} - ${i.type}, ${i.quantity}`));
+
+  const handleReffCode = () => {
+    if (refCode.includes(referralcode)){
+      setReferralCodeDiscount(5000);
+    }else{
+      setReferralCodeDiscount(0);
+    }
+  }
+
+  useEffect(() => {
+    handleReffCode();
+  }, [referralcode]);
 
   const validateForm = () => {
     let err = "";
@@ -115,7 +127,7 @@ export default function MerchForm() {
     if (!phone || phone == ""){
       err = "Phone Number is required";
     }
-    if (!shippingCost || shippingCost == ""){
+    if (!shippingCost){
       err = "Shipping Cost is required";
     }
     if (!name || name == ""){
@@ -174,7 +186,7 @@ export default function MerchForm() {
     }
   }
 
- const addToFirestore = async ({url}) => {
+ const addToFirestore = async () => {
    try{
      const paymentName = getPaymentName();
   await addDoc(collection(db, "transaction"), {
@@ -195,7 +207,7 @@ export default function MerchForm() {
     total: itemCost +  (shippingCost && shippingCost != "" ? parseInt(shippingCost) : 0) - referralcodeDiscount,
     referralcode: referralcode,
     payment: paymentName,
-    proof: url
+    proof: proof
     })
     toast({
       title: 'Success!',
@@ -227,15 +239,18 @@ const checkout = async () => {
     const storage = getStorage();
     const today =  new Date();
     const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-    const storageRef = ref(storage, `merch-proof/${name}-${date}.jpg`);
+    const storageRef = ref(storage, `merch-proof/${name}_${date}.jpg`);
     uploadBytes(storageRef, acceptedFiles[0]).then((snapshot) => {
-      getDownloadURL(ref(storage, `merch-proof/${name}-${date}.jpg`)).then((url) => {
-        addToFirestore(url);
+      getDownloadURL(ref(storage, `merch-proof/${name}_${date}.jpg`)).then((url) => {
+        proof = url;
+        console.log(url);
+        addToFirestore();
     })
     });
 }
 
   } catch (e) {
+    console.log(e);
     var msg = e.message;
     const error = msg.replace("Firebase:", "");
     toast({
@@ -370,14 +385,7 @@ const formatter = Intl.NumberFormat("en-US", {
                     <ListItem>Referral code can not be used during promo session.</ListItem>
                   </UnorderedList>
                 </Box>
-                <Input fontSize="0.75em" id="referralcode" placeholder="XXXXXXXX" borderRadius="19px" border="2px" borderColor="black" value={referralcode} 
-                onChange={(e) => {
-                  setReferralCode(e.target.value)
-                  if (refCode.includes(referralcode)){
-                    setReferralCodeDiscount(5000);
-                  }
-                }
-                }/>
+                <Input fontSize="0.75em" id="referralcode" placeholder="XXXXXXXX" borderRadius="19px" border="2px" borderColor="black" value={referralcode} onChange={(e) =>  setReferralCode(e.target.value)}/>
               </FormControl>
             </GridItem>
             <GridItem>
@@ -417,7 +425,7 @@ const formatter = Intl.NumberFormat("en-US", {
               </Box>
               <Flex flexDir="column" gridGap="0.5rem" padding="1rem">
                 {cart?.map((item) => (
-                <Flex d={{base:"column", sm:"row"}} gridGap="1rem" w="100%" alignItems="center">
+                <Flex flexDir={{ base:"column", sm:"row"}} gridGap="1rem" w="100%" alignItems="center">
                   <Flex w="100%">
                     <Box filter="drop-shadow(8px 10px 8px rgba(0, 0, 0, 0.25))" width={150} height={150}>
                       <Image src={item.image} />

@@ -231,7 +231,7 @@ function MerchandiseDetail({ id, name, description, price, image , type, isOpen,
         await addDoc(collection(db, `user/${user.userID}/cart`), {
             idItem: id,
             name: name,
-            type: type ? parseInt(imgIdx) - 1 : null,
+            type: type ? type[parseInt(imgIdx)] - 1 : "",
             price: price,
             image: image[parseInt(imgIdx) - 1],
             quantity: qty,
@@ -266,7 +266,7 @@ function MerchandiseDetail({ id, name, description, price, image , type, isOpen,
         await addDoc(collection(db, `user/${user.userID}/cart`), {
             idItem: id,
             name: name,
-            type: type ? type[parseInt(imgIdx)] - 1 : "",
+            type: type && type.length ? type[parseInt(imgIdx) - 1] : "",
             price: price,
             image: image[parseInt(imgIdx) - 1],
             quantity: qty,
@@ -294,6 +294,8 @@ function MerchandiseDetail({ id, name, description, price, image , type, isOpen,
     }
   }
 
+
+console.log(type);
   return (
     <Modal
       onClose={() => {
