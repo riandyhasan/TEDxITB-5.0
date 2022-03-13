@@ -94,6 +94,22 @@ export default function Header({ ...props }) {
               </Box>
             );
           })}
+          {user.data && user.profile.admin == 1 ? (
+            <Box>
+              <Link href="/transaction">
+                <Text
+                  fontSize="0.9em"
+                  fontWeight="extrabold"
+                  cursor="pointer"
+                  textAlign="center"
+                  textShadow="0px 2.3px 1.6px rgba(0, 0, 0, 0.35)"
+                  color="brand.tedred"
+                >
+                  Transaction
+                </Text>
+              </Link>
+            </Box>
+          ) : null}
           {user.data ? (
             <Box
               px="2rem"
