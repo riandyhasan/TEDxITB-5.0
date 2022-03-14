@@ -90,7 +90,7 @@ const HistorySection = () => {
         </Text>
       <Grid
         h="max-content"
-        w='100vw'
+        w='100%'
         templateRows='repeat(4, 1fr)'
         templateColumns='repeat(4, 1fr)'
         bg="white"
