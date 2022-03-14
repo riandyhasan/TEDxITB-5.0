@@ -8,7 +8,7 @@ const HeroSection = () => {
       bgSize="fill"
       w="100vw"
       h="100vh"
-      minH="max-content"
+      minH="350px"
       align="center"
       justify="center">
       <ScaleFade
@@ -25,7 +25,7 @@ const HeroSection = () => {
           bgSize={{ base: "770px", md: "contain" }}
           w="100vw"
           h="100vh"
-          minH="max-content"
+          minH="350px"
           align="center"
           justify="center"
           direction="column">
@@ -52,8 +52,8 @@ const HeroSection = () => {
           </Heading>
           <Text
             fontFamily="HKGrotesk"
-            fontWeight="normal"
-            fontSize="2xl"
+            fontWeight="semibold"
+            fontSize="1.6rem"
             color="white"
             textShadow="7px 6px 3px #00000040">
             Daydreamers
