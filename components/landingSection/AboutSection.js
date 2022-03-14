@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Text, Grid, GridItem, Flex } from "@chakra-ui/react";
+import { Box, Text, Flex } from "@chakra-ui/react";
 
 const AboutSection = () => {
   return (
@@ -15,7 +15,10 @@ const AboutSection = () => {
       >
         About TEDx
       </Text>
-      <Flex direction="column" px="100px">
+      <Flex
+      direction="column"
+      px="8vw"
+      >
         <Flex
           direction={{ base: "column", lg: "row" }}
           py="2%"
@@ -37,7 +40,7 @@ const AboutSection = () => {
             <Text
               fontFamily="HKGrotesk"
               fontWeight="thin"
-              fontSize={{ base: "0.85rem", sm: "1rem" }}
+              fontSize={{base: "0.85rem", sm: "1.2rem"}}
               color="#000000"
               textAlign="justify"
             >
@@ -74,7 +77,7 @@ const AboutSection = () => {
             <Text
               fontFamily="HKGrotesk"
               fontWeight="thin"
-              fontSize={{ base: "0.85rem", sm: "1rem" }}
+              fontSize={{base: "0.85rem", sm: "1.2rem"}}
               color="#000000"
               textAlign="justify"
             >
