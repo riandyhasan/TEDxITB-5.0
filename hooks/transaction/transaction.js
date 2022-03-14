@@ -2,15 +2,15 @@ import React, { useEffect, useState } from "react";
 import { db } from "../../utils/firebase";
 import { collection, getDocs } from "firebase/firestore";
 
-export default function getMerch() {
-  const [merch, setMerch] = useState();
+export default function getTransaction() {
+  const [transaction, setTrasaction] = useState();
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
   async function getData() {
     try {
-      const response = await getDocs(collection(db, "merch"));
-      setMerch(
+      const response = await getDocs(collection(db, "transaction"));
+      setTrasaction(
         response.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
@@ -27,5 +27,5 @@ export default function getMerch() {
     getData();
   }, []);
 
-  return { merch, error, loading };
+  return { transaction, error, loading };
 }
