@@ -61,8 +61,8 @@ export default function Footer() {
       >
         <Image
           src="/assets/images/logo/Logo TEDxITB.png"
-          height={100}
-          width={200}
+          height={99}
+          width={399}
         />
         <Text textAlign="center">
           This independent TEDx event is operated under license from TED.
