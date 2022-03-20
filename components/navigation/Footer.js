@@ -60,7 +60,7 @@ export default function Footer() {
         gridGap="2rem"
       >
         <Image
-          src="/assets/images/logo/Logo TEDxITB Hitam.png"
+          src="/assets/images/logo/Logo TEDxITB.png"
           height={100}
           width={200}
         />
