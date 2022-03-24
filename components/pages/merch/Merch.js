@@ -266,7 +266,7 @@ function MerchandiseDetail({
         }
         toast({
           title: "Success!",
-          description: "Item has add to your cart!",
+          description: "Item has been added to your cart!",
           status: "success",
           duration: 2000,
           isClosable: true,
@@ -318,7 +318,7 @@ function MerchandiseDetail({
         }
         toast({
           title: "Success!",
-          description: "Item has add to your cart!",
+          description: "Item has been added to your cart!",
           status: "success",
           duration: 2000,
           isClosable: true,

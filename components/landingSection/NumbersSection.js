@@ -138,7 +138,7 @@ const NumbersSection = () => {
       >
         <DataCount
           className="count"
-          end={43.3}
+          end={28.9}
           decimals={1}
           suffix="k"
           prefix="+"
