@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { db } from "../../utils/firebase";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, orderBy, query } from "firebase/firestore";
 
 
 export default function getPosts() {
@@ -10,7 +10,9 @@ export default function getPosts() {
 
   async function getData() {
     try {
-      const response = await getDocs(collection(db, "microblog"))
+      const blogs = collection(db, "microblog");
+      const q = query(blogs, orderBy("order", "desc"));
+      const response = await getDocs(q);
       setPosts(
         response.docs.map((doc) => ({
           id: doc.id,
