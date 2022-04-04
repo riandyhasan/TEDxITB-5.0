@@ -6,7 +6,6 @@ import NumbersSection from "../components/landingSection/NumbersSection";
 import HistorySection from "../components/landingSection/HistorySection";
 import AboutSection from "../components/landingSection/AboutSection";
 
-
 export default function Home() {
   return (
     <Layout>
@@ -14,13 +13,19 @@ export default function Home() {
         <title>TEDxITB 5.0</title>
       </Head>
 
-      <Flex justify="center" align="center" w="100%" minH="100vh" fontSize="5em" direction="column">
+      <Flex
+        justify="center"
+        align="center"
+        w="100%"
+        minH="100vh"
+        fontSize="5em"
+        direction="column"
+      >
         <HeroSection />
         <NumbersSection />
         <HistorySection />
         <AboutSection />
       </Flex>
-
     </Layout>
   );
 }

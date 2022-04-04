@@ -1,25 +1,26 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { db } from "../../utils/firebase";
 import { collection, getDocs } from "firebase/firestore";
 
-export default function getMerch() {
-  const [merch, setMerch] = useState();
-  const [error, setError] = useState(null);
+
+export default function getPosts() {
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [posts, setPosts] = useState([]);
 
   async function getData() {
     try {
-      const response = await getDocs(collection(db, "merch"));
-      setMerch(
+      const response = await getDocs(collection(db, "microblog"))
+      setPosts(
         response.docs.map((doc) => ({
           id: doc.id,
-          ...doc.data(),
+          ...doc.data()
         }))
       );
       setLoading(false);
       setError(null);
     } catch (e) {
-      setError(e);
+      setError (e);
     }
   }
 
@@ -27,5 +28,5 @@ export default function getMerch() {
     getData();
   }, []);
 
-  return { merch, error, loading };
+  return { posts, error, loading };
 }

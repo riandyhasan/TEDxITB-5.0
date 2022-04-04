@@ -70,3 +70,46 @@ export const FONTS = `
   url('/assets/fonts/HKGrotest/TTF/HKGrotesk-Black.ttf') format('truetype'), /* Safari, Android, iOS */
 }
 `;
+
+export const EMAIL_TEMPLATE = (item, price, qty) => {
+  let ITEM = [];
+  item.map((i, idx) =>
+    ITEM.push(`                      
+  <tr>
+  <td class="column column-1" style="mso-table-lspace: 0; mso-table-rspace: 0; font-weight: 400; text-align: left; vertical-align: top; border: 0;">
+    <table class="text_block" style="word-break: break-word; width: 99.9155%;" role="presentation" border="0">
+      <tbody>
+        <tr>
+          <td style="padding: 25px 20px 10px; width: 100%;">
+            <div style="font-family: sans-serif;">
+              <div style="font-size: 12px; mso-line-height-alt: 14.399999999999999px; color: #000; line-height: 1.2; font-family: Lato,Tahoma,Verdana,Segoe,sans-serif;">
+                <p style="margin: 0; font-size: 14px;">
+                  <span style="color: #000000; font-size: 14px;">${qty[idx]} x ${i}</span>
+                </p>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </td>
+  <td class="column column-2" style="mso-table-lspace: 0; mso-table-rspace: 0; font-weight: 400; text-align: left; vertical-align: top; border: 0;">
+    <table class="text_block" style="word-break: break-word; width: 99.407%; height: 52.7917px;" role="presentation" border="0">
+      <tbody>
+        <tr style="height: 52.7917px;">
+          <td style="padding: 25px 20px 10px; width: 100%; height: 52.7917px;">
+            <div style="font-family: sans-serif;">
+              <div style="font-size: 12px; mso-line-height-alt: 14.399999999999999px; color: #000; line-height: 1.2; font-family: Lato,Tahoma,Verdana,Segoe,sans-serif;">
+                <p style="margin: 0px; font-size: 14px; text-align: right;">IDR ${price[idx]}</p>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </td>
+</tr>
+`)
+  );
+  return ITEM;
+};
