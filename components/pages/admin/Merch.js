@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useRef} from 'react';
 import {
   Flex,
   Heading,
@@ -10,6 +10,7 @@ import {
   Td,
   OrderedList,
   ListItem,
+  Button
 } from "@chakra-ui/react";
 import getTransaction from "../../../hooks/transaction/transaction";
 
@@ -29,11 +30,13 @@ export default function MerchDetail() {
     return tags;
   };
 
-  console.log(transaction);
+  const tableRef = useRef(null);
+
+
 
   return (
     <Flex w="100%" minH="100vh" justifyContent="center" py="4rem">
-      <Table variant="simple" size="sm">
+      <Table variant="simple" size="sm" ref={tableRef}>
         <Thead>
           <Tr>
             <Th>Email</Th>
@@ -60,8 +63,9 @@ export default function MerchDetail() {
                   </OrderedList>
                 </Td>
                 <Td>{formatter.format(String(i.total))}</Td>
+                {}
                 <Td>{i.referralcode}</Td>
-                <Td>{`${i.address} ${i.subdistrict} ${i.district} ${i.city} ${i.province} ${i.postcode}`}</Td>
+                {i.shipping == 'pickup' ?  <Td>Offline</Td> : <Td>{`${i.address} ${i.subdistrict} ${i.district} ${i.city} ${i.province} ${i.postcode}`}</Td> }
                 <Td>{i.shipping}</Td>
                 <Td color="red">
                   <a href={i.proof} target="_blank">

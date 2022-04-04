@@ -17,6 +17,10 @@ const LINKS = [
     name: "Merchandise",
     path: "/merchandise",
   },
+  {
+    name: "Microblog",
+    path: "/microblog",
+  }
 ];
 
 export default function Header({ ...props }) {

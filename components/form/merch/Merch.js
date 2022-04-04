@@ -28,14 +28,11 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import getCart from "../../../hooks/cart/cart";
-import useUser from "../../../hooks/user/user";
 import { AiOutlineClose } from "react-icons/ai";
 import { BsUpload } from "react-icons/bs";
 import { useDropzone } from "react-dropzone";
 import { useRouter } from "next/router";
 import emailjs from "emailjs-com";
-import { EMAIL_TEMPLATE } from "../../../constant";
 
 const paymentmethod = [
   {
@@ -82,7 +79,7 @@ const paymentmethod = [
   // },
 ];
 
-export default function MerchForm() {
+export default function MerchForm({data, user}) {
   let itemCost = 0;
   var proof = "";
   const [shippingCost, setShippingCost] = useState(0);
@@ -119,9 +116,7 @@ export default function MerchForm() {
       maxSize: 10097152,
     });
 
-  const data = getCart();
   const cart = data.cart;
-  const user = useUser();
 
   let item = [];
   cart?.map((i) => item.push(`${i.name} - ${i.type}, ${i.quantity}`));
