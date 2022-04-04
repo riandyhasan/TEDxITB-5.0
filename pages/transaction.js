@@ -5,6 +5,7 @@ import Transaction from "../components/pages/admin/Merch";
 import useUser from "../hooks/user/user";
 import { useRouter } from "next/router";
 import { Flex, Heading } from "@chakra-ui/react";
+import Loading from "../components/loading/Loading";
 
 export default function TransactionPage() {
   const user = useUser();
@@ -18,7 +19,7 @@ export default function TransactionPage() {
 
   console.log;
 
-  return (
+  return user.data && !user.loading ?(
     <Layout>
       <Head>
         <title>TEDxITB 5.0</title>
@@ -31,5 +32,7 @@ export default function TransactionPage() {
         </Flex>
       )}
     </Layout>
-  );
+  ) : (
+    <Loading/>
+  )
 }

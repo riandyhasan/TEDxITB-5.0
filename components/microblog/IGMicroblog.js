@@ -1,5 +1,4 @@
 import React from "react";
-import getPosts from "../../hooks/microblog/microblog";
 import { 
   Box, 
   Text, 
@@ -84,8 +83,7 @@ function Card(props) {
   );
 }
 
-const IGMicroblog = () => {
-  const data = getPosts()
+const IGMicroblog = ({data}) => {
   return (
     <Flex
       bg="linear-gradient(255.02deg, #E62B1E 22.91%, rgba(240, 89, 43, 0.9) 99.42%);" 

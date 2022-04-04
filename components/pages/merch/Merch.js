@@ -25,14 +25,12 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import QtyPicker from "../../inputs/QtyPicker";
-import getMerch from "../../../hooks/merch/merch";
 import useUser from "../../../hooks/user/user";
-import getCart from "../../../hooks/cart/cart";
 import { useRouter } from "next/router";
 import { db } from "../../../utils/firebase";
 import { addDoc, collection, updateDoc, doc } from "firebase/firestore";
 
-export default function MerchandisePage() {
+export default function MerchandisePage({data, dataCart}) {
   const [searchBarInput, setSearchBarInput] = useState("");
   const [categoryInput, setCategoryInput] = useState("all");
   const [showOpen, setShowOpen] = useState(0);
@@ -52,11 +50,8 @@ export default function MerchandisePage() {
     slidesToScroll: 1,
   };
 
-  const data = getMerch();
   const merchandise = data.merch;
-  const dataCart = getCart();
   const cart = dataCart.cart;
-  const loading = data.loading;
   let unfiltered_category = [];
   data.merch?.map((item) =>
     item.category?.map((i) => unfiltered_category.push(i))

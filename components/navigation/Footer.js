@@ -60,9 +60,9 @@ export default function Footer() {
         gridGap="2rem"
       >
         <Image
-          src="/assets/images/logo/Logo TEDxITB.png"
-          height={99}
-          width={399}
+          src="/assets/images/logo/Logo TEDxITB Putih.png"
+          height={110}
+          width={220}
         />
         <Text textAlign="center">
           This independent TEDx event is operated under license from TED.
