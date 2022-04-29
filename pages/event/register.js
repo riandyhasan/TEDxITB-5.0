@@ -4,10 +4,12 @@ import Hero from "../../components/pages/event/Hero";
 import Form from "../../components/form/event/Event";
 import Loading from "../../components/loading/Loading";
 import useUser from "../../hooks/user/user";
+import getRegistrant from "../../hooks/registrant/registrant";
 
 export default function RegisterEvent() {
   const user = useUser();
-  return user.data && !user.loading ?(
+  const registrant = getRegistrant();
+  return user.data && !user.loading && !registrant.loading ?(
     <Layout>
       <Head>
         <title>TEDxITB 5.0 | Event</title>
@@ -15,7 +17,7 @@ export default function RegisterEvent() {
 
 
         <Hero />
-        <Form user={user}/>
+        <Form user={user} registrant={registrant} />
     </Layout>
     ) : (
       <Loading/>

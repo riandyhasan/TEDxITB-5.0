@@ -13,20 +13,38 @@ import {
   Radio,
   RadioGroup,
   Textarea,
-  useToast, 
+  useToast,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  useDisclosure, 
   } from "@chakra-ui/react";
 import { db } from "../../../utils/firebase";
 import {
-  collection,
-  addDoc,
+  setDoc,
+  doc,
 } from "firebase/firestore";
 import { useRouter } from "next/router";
+import { MdMarkEmailRead } from "react-icons/md";
+import emailjs from "emailjs-com";
 
-export default function RegisterEvent({user}) {
+export default function RegisterEvent({user, registrant}) {
+  let submitted = false;
+  registrant.registrant?.map((i) => {
+    if(i.id == user.userID){
+      submitted = true;
+    }
+  }); 
   const email = user.profile.email;
   const [name, setName] = useState("");
   const [institution, setInstitution] = useState("");
+  const [occupation, setOccupation] = useState("");
   const [phone, setPhone] = useState("");
+  const [findEvent, setFindEvent] = useState("1");
+  const [findEventOther, setFindEventOther] = useState("");
   const [address, setAddress] = useState("");
   const [ticketType, setTicketType] = useState("1");
   const [vaccinated, setVaccinated] = useState("1");
@@ -34,9 +52,26 @@ export default function RegisterEvent({user}) {
   const [spread, setSpread] = useState("");
   const toast = useToast();
   const router = useRouter();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   function WordCount(str) { 
     return str.split(" ").length;
+  }
+
+  function findEventValue(){
+    let find = "";
+    if(findEvent == '1'){
+      find = "Media partner's Instagram";
+    }else if(findEvent == '2'){
+      find = "TEDxITB Instagram";
+    }else if(findEvent == '3'){
+      find = "Friend";
+    }else if(findEvent == '4'){
+      find = "LINE/Whatsapp Broadcast";
+    }else if(findEvent == '5'){
+      find = findEventOther;
+    }
+    return find;
   }
   
   const validateForm = () => {
@@ -46,6 +81,9 @@ export default function RegisterEvent({user}) {
     }
     if(reasons == "" || spread == ""){
       err = "Opinion questions are required"
+    }
+    if(occupation == ""){
+      err = "Occupation is required";
     }
     if (!address || address == "") {
       err = "Address is required";
@@ -88,31 +126,39 @@ export default function RegisterEvent({user}) {
       }else if(today > normal && today <= late){
         ticketWave = "Late";
       }
-      await addDoc(collection(db, "event-registrant"), {
+      const find = findEventValue();
+      await setDoc(doc(db, "event-registrant", user.userID), {
         name: name,
         email: email,
         address: address,
         phone: phone,
+        occupation: occupation,
         institution: institution,
+        findEvent: find,
         ticketType: ticketType == '1' ? 'Offline' : 'Online',
         ticketWave: ticketWave,
         vaccinated: ticketType == '2' ? 'Online' : vaccinated == '1' ? 'Yes' : 'No',
         reasonQuestion: reasons,
         spreadingQuestion: spread,
       });
-
-      toast({
-        title: "Success!",
-        description: "Your form has been submitted successfully!",
-        status: "success",
-        duration: 2000,
-        isClosable: true,
-      });
-
-      router.push("/");
+      const emailBody = {
+        name: name,
+      };
+      emailjs
+        .send("tedxitb5.0", "tedxitb5", emailBody, "QUWx86By2g9osljF4")
+        .then(
+          (result) => {
+            console.log(result.text);
+          },
+          (error) => {
+            console.log(error.text);
+          }
+        );
+      onOpen();
     }
 
     } catch (e) {
+      console.log(user);
       console.log(e);
       var msg = e.message;
       const error = msg.replace("Firebase:", "");
@@ -126,7 +172,49 @@ export default function RegisterEvent({user}) {
     }
   };
 
+  const handleClose = () => {
+    onClose();
+    router.push('/');
+  }
+
   return (
+    <>
+    <Modal closeOnOverlayClick={false} isOpen={isOpen} onClose={onClose}>
+    <ModalOverlay />
+    <ModalContent>
+      <ModalHeader>Your form has been submitted successfully!</ModalHeader>
+      <ModalBody pb={6}>
+        <Text>
+        Thank you for registering to TEDxITB 5.0 Daydreamers!
+      <br/><br/>
+We are highly delighted by your interest in contributing to broaden the spread of ideas and we will review your responses carefully. 
+<br/><br/>
+The following notification will be sent promptly through the registered email to announce the selected participants who will attend the TEDxITB 5.0 Daydreamers. 
+<br/><br/>
+Please complete the payment once you have received an acceptance email and for further information will be included in the mail. 
+<br/><br/>
+Thank you once again for your patience and enthusiasm to attend the TEDxITB 5.0 Daydreamers!
+
+        </Text>
+      </ModalBody>
+
+      <ModalFooter>
+      <Box
+            color="white"
+            bg="brand.gradientRed"
+            fontWeight="bold"
+            borderRadius="19px"
+            px="3rem"
+            py="0.4rem"
+            cursor="pointer"
+            fontSize="0.85em"
+            onClick={handleClose}
+          >
+            Close
+          </Box>
+      </ModalFooter>
+    </ModalContent>
+  </Modal>
     <Flex
       bg="linear-gradient(255.02deg, #E62B1E 22.91%, rgba(240, 89, 43, 0.9) 99.42%);" 
       bgSize="fill"
@@ -144,7 +232,32 @@ export default function RegisterEvent({user}) {
         flexWrap="wrap"
         justifyContent="space-evenly"
         >
-
+{
+  submitted ?
+  <Flex w="100%" align="center" justify="center" gridGap="2rem" flexDir="column">
+          <Heading
+          fontFamily="HKGrotesk"
+          fontWeight="bold"
+          fontSize="2em"
+          color="black"
+          textShadow="0px 4px 4px #00000040"
+          textAlign="center"
+          >
+          You already submitted the form
+        </Heading>
+        <MdMarkEmailRead size="10em" color="#E62B1E"/>
+        <Heading
+          fontFamily="HKGrotesk"
+          fontWeight="bold"
+          fontSize="1.5em"
+          color="black"
+          textAlign="center"
+          >
+          Please kindly check your email for confirmation
+        </Heading>
+  </Flex>
+    : 
+  <>
           <Heading
           fontFamily="HKGrotesk"
           fontWeight="bold"
@@ -223,6 +336,24 @@ export default function RegisterEvent({user}) {
 
             <GridItem>
               <FormControl isRequired>
+                <FormLabel fontSize="1em" htmlFor="occupation">
+                  Occupation
+                </FormLabel>
+                <Input
+                  fontSize="1em"
+                  id="ccupation"
+                  placeholder="Occupation"
+                  borderRadius="19px"
+                  border="2px"
+                  borderColor="black"
+                  value={occupation}
+                  onChange={(e) => setOccupation(e.target.value)}
+                />
+              </FormControl>
+            </GridItem>
+
+            <GridItem>
+              <FormControl isRequired>
                 <FormLabel fontSize="1em" htmlFor="phone">
                   Phone Number
                 </FormLabel>
@@ -254,6 +385,36 @@ export default function RegisterEvent({user}) {
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
                 />
+              </FormControl>
+            </GridItem>
+
+            <GridItem>
+              <FormControl isRequired>
+                <FormLabel fontSize="1em" htmlFor="findevent">
+                Where did you find out about this event?
+                </FormLabel>
+                <RadioGroup onChange={setFindEvent} value={findEvent} fontSize="1.2em">
+                <Stack direction='column'>
+                  <Radio colorScheme='red' value='1'>Media partner's Instagram</Radio>
+                  <Radio colorScheme='red' value='2'>TEDxITB Instagram</Radio>
+                  <Radio colorScheme='red' value='3'>Friend</Radio>
+                  <Radio colorScheme='red' value='4'>LINE/Whatsapp Broadcast</Radio>
+                  <Flex alignItems="center" gridGap="1.5rem">
+                   <Radio colorScheme='red' value='5'>Others</Radio>
+                   <Input
+                      w="30%"
+                      fontSize="0.75em"
+                      id="findEvent"
+                      borderRadius="19px"
+                      border="2px"
+                      borderColor="black"
+                      value={findEventOther}
+                      onChange={(e) => setFindEventOther(e.target.value)}
+                      isDisabled={findEvent == '5' ? false : true}
+                    />
+                  </Flex>
+                </Stack>
+              </RadioGroup>
               </FormControl>
             </GridItem>
 
@@ -351,8 +512,11 @@ export default function RegisterEvent({user}) {
             Submit
           </Box>
         </Flex>
+        </>
+        }
       </Flex>
     </Flex>
+    </>
   );
 };
 

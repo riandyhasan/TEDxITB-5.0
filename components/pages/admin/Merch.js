@@ -10,7 +10,7 @@ import {
   Td,
   OrderedList,
   ListItem,
-  Button
+  Box
 } from "@chakra-ui/react";
 import getTransaction from "../../../hooks/transaction/transaction";
 
@@ -35,8 +35,10 @@ export default function MerchDetail() {
 
 
   return (
-    <Flex w="100%" minH="100vh" justifyContent="center" py="4rem">
-      <Table variant="simple" size="sm" ref={tableRef}>
+    <Flex w="80%" minH="80vh" justifyContent="center"
+    >
+        <Box overflowX="auto" overflowY="auto" maxH="60vh"  whiteSpace="nowrap" display='inline-block'>
+      <Table ref={tableRef}>
         <Thead>
           <Tr>
             <Th>Email</Th>
@@ -79,6 +81,7 @@ export default function MerchDetail() {
           )}
         </Tbody>
       </Table>
-    </Flex>
+      </Box>
+      </Flex>
   );
 }
