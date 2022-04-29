@@ -1,0 +1,74 @@
+import { 
+  Box, 
+  Heading, 
+  Flex,
+  Image
+  } from "@chakra-ui/react";
+import { useRouter } from "next/router";
+
+export default function Event({user}) {
+  const router = useRouter();
+
+  const registerNow =() => {
+      if(user.data){
+          router.push("/event/register");
+      }else{
+          router.push("/login");
+      }
+  }
+
+  return (
+    <Flex
+      bg="linear-gradient(255.02deg, #E62B1E 22.91%, rgba(240, 89, 43, 0.9) 99.42%);" 
+      bgSize="fill"
+      w="100%"
+      h="fit-content"
+      justify="center"
+      py="5rem"
+    >
+      <Flex
+        bgImage="/assets/images/background/microblog-wave.png"
+        w="90%"
+        h="fit-content"
+        px="4%"
+        py="2%"
+        flexDir="column"
+        align="center"
+        >
+
+        <Heading
+          fontFamily="HKGrotesk"
+          fontWeight="bold"
+          fontSize={{ base: "1rem", sm: "2rem", md:"3rem" }}
+          color="black"
+          textShadow="0px 4px 4px #00000040"
+          textAlign="center"
+          my="2rem"
+          >
+          Our Main Event
+        </Heading>
+
+        <Box w={{base:"200px", md:"350px"}} h={{base:"200px", md:"350px"}}>
+            <Image src="/assets/images/dummy/event-register.jpg"/>
+        </Box>
+
+        <Box
+            color="white"
+            bg="brand.gradientRed"
+            fontWeight="bold"
+            borderRadius="19px"
+            px="3rem"
+            py="0.4rem"
+            cursor="pointer"
+            fontSize="0.85em"
+            mt="2rem"
+            onClick={registerNow}
+          >
+            Register Now
+          </Box>
+      </Flex>
+    </Flex>
+  );
+};
+
+

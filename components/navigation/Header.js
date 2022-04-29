@@ -20,6 +20,9 @@ const LINKS = [
   {
     name: "Microblog",
     path: "/microblog",
+  },{
+    name: "Event",
+    path: "/event",
   }
 ];
 

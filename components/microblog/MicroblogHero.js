@@ -8,8 +8,10 @@ const MicroblogHero = () => {
       direction="column"
       >
       <Flex
-        bg="linear-gradient(255.02deg, #E62B1E 22.91%, rgba(240, 89, 43, 0.9) 99.42%);" 
-        bgSize="fill"
+        bgImage="url('/assets/images/background/microblog.png')"
+        bgPosition="center"
+        bgRepeat="no-repeat"
+        bgSize="cover"
         w="100%"
         h="100vh"
         minH="350px"
