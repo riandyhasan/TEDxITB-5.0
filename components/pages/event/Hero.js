@@ -9,7 +9,7 @@ export default function Hero(){
         bgRepeat="no-repeat"
         bgSize="cover"
         w="100%"
-        h="40vh"
+        h={{base:"20vh", md:"40vh"}}
         minH="350px"
         align="center"
         justify="center"

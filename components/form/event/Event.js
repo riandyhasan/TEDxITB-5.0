@@ -160,7 +160,7 @@ export default function RegisterEvent({user}) {
           <Heading
           fontFamily="HKGrotesk"
           fontWeight="bold"
-          fontSize={{ base: "0.75rem", sm: "1rem", md:"1.5rem" }}
+          fontSize={{ base: "1rem", md:"1.5rem" }}
           color="black"
           textAlign="left"
           mt="2rem"
@@ -291,7 +291,7 @@ export default function RegisterEvent({user}) {
           <Heading
           fontFamily="HKGrotesk"
           fontWeight="bold"
-          fontSize={{ base: "0.75rem", sm: "1rem", md:"1.5rem" }}
+          fontSize={{ base: "1rem", md:"1.5rem" }}
           color="black"
           textAlign="left"
           mt="2rem"

@@ -120,10 +120,13 @@ export default function MerchForm({data, user}) {
 
   let item = [];
   cart?.map((i) => item.push(`${i.name} - ${i.type}, ${i.quantity}`));
+  let itemAmount = 0;
+  cart?.map((i) => itemAmount += i.quantity); 
 
   const handleReffCode = () => {
     if (refCode.includes(referralcode)) {
-      setReferralCodeDiscount(5000);
+      const x = Math.floor(itemAmount / 2);
+      setReferralCodeDiscount(5000 * x);
     } else {
       setReferralCodeDiscount(0);
     }
@@ -204,6 +207,7 @@ export default function MerchForm({data, user}) {
   const deleteItem = async (id) => {
     try {
       await deleteDoc(doc(db, `user/${user.userID}/cart`, id));
+      handleReffCode();
     } catch (e) {
       console.log(e);
     }
@@ -215,6 +219,7 @@ export default function MerchForm({data, user}) {
       await updateDoc(docRef, {
         quantity: qty,
       });
+      handleReffCode()
     } catch (e) {
       console.log(e);
     }
