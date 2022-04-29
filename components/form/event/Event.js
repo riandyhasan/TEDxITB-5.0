@@ -319,7 +319,7 @@ export default function RegisterEvent({user}) {
         <GridItem>
             <FormControl isRequired>
               <FormLabel fontSize="1em">
-              How will you spread the ideas from TEDxITB to other people? (max. 100 words)
+              How do you want to utilize the ideas you get from TEDxITB to others? (max. 100 words)
               </FormLabel>
               <Textarea 
               placeholder="Max 100 words."
