@@ -13,6 +13,7 @@ import {
   Box
 } from "@chakra-ui/react";
 import getTransaction from "../../../hooks/transaction/transaction";
+import XLSX from "xlsx";
 
 export default function MerchDetail() {
   const data = getTransaction();
@@ -31,12 +32,39 @@ export default function MerchDetail() {
   };
 
   const tableRef = useRef(null);
+  
+  const downloadExcel = () => {
+    XLSX = require('xlsx');
+    const worksheet = XLSX.utils.json_to_sheet(transaction);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+    //let buffer = XLSX.write(workbook, { bookType: "xlsx", type: "buffer" });
+    //XLSX.write(workbook, { bookType: "xlsx", type: "binary" });
+    let today = new Date()
+    today.toISOString().split('T')[0]
+    XLSX.writeFile(workbook, `Merch TEDxITB - ${today}.xlsx`);
+  };
 
 
 
   return (
-    <Flex w="80%" minH="80vh" justifyContent="center"
+    <Flex w="80%" minH="80vh" flexDir="column"
     >
+      <Flex w="100%" justifyContent="flex-end" my="1rem">
+      <Box
+            color="white"
+            bg="brand.gradientRed"
+            fontWeight="bold"
+            borderRadius="19px"
+            px="3rem"
+            py="0.4rem"
+            cursor="pointer"
+            fontSize="0.85em"
+            onClick={downloadExcel}
+          >
+            Download Data
+          </Box>
+      </Flex> 
         <Box overflowX="auto" overflowY="auto" maxH="60vh"  whiteSpace="nowrap" display='inline-block'>
       <Table ref={tableRef}>
         <Thead>
