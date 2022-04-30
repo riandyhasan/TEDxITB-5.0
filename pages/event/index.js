@@ -7,17 +7,16 @@ import useUser from "../../hooks/user/user";
 
 export default function Event() {
   const user = useUser();
-  return !user.loading ?(
+  return !user.loading ? (
     <Layout>
       <Head>
         <title>TEDxITB 5.0 | Event</title>
       </Head>
 
-
-        <Hero />
-        <Poster user={user}/>
+      <Hero />
+      <Poster user={user} />
     </Layout>
-    ) : (
-      <Loading/>
-    )
-  }
+  ) : (
+    <Loading />
+  );
+}

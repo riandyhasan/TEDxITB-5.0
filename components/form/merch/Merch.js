@@ -79,7 +79,7 @@ const paymentmethod = [
   // },
 ];
 
-export default function MerchForm({data, user}) {
+export default function MerchForm({ data, user }) {
   let itemCost = 0;
   var proof = "";
   const [shippingCost, setShippingCost] = useState(0);
@@ -121,7 +121,7 @@ export default function MerchForm({data, user}) {
   let item = [];
   cart?.map((i) => item.push(`${i.name} - ${i.type}, ${i.quantity}`));
   let itemAmount = 0;
-  cart?.map((i) => itemAmount += i.quantity); 
+  cart?.map((i) => (itemAmount += i.quantity));
 
   const handleReffCode = () => {
     if (refCode.includes(referralcode)) {
@@ -219,7 +219,7 @@ export default function MerchForm({data, user}) {
       await updateDoc(docRef, {
         quantity: qty,
       });
-      handleReffCode()
+      handleReffCode();
     } catch (e) {
       console.log(e);
     }

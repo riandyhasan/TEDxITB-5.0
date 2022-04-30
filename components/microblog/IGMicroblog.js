@@ -1,72 +1,77 @@
 import React from "react";
-import { 
-  Box, 
-  Text, 
-  Flex, 
-  Image, 
+import {
+  Box,
+  Text,
+  Flex,
+  Image,
   useTheme,
-  useDisclosure, 
+  useDisclosure,
   Link,
-  Modal, 
-  ModalOverlay, 
-  ModalContent, 
-  ModalCloseButton, 
-  ModalBody
-  } from "@chakra-ui/react";
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalCloseButton,
+  ModalBody,
+} from "@chakra-ui/react";
 
 function Card(props) {
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const theme = useTheme();
   return (
     <>
       <Box
-        as='button'
+        as="button"
         w="320px"
         h="auto"
-        transition='all 0.2s cubic-bezier(.08,.52,.52,1)'
-        color='#4b4f56'
+        transition="all 0.2s cubic-bezier(.08,.52,.52,1)"
+        color="#4b4f56"
         my="20px"
         _active={{
-          transform: 'scale(0.96)',
+          transform: "scale(0.96)",
         }}
-        boxShadow= '-5px 5px 30px rgba(0, 0, 0, 0.2)'
+        boxShadow="-5px 5px 30px rgba(0, 0, 0, 0.2)"
         onClick={onOpen}
       >
         <Image
-          transition='all 0.2s cubic-bezier(.08,.52,.52,1)'
-          _hover={{ filter: 'brightness(90%)' }}
+          transition="all 0.2s cubic-bezier(.08,.52,.52,1)"
+          _hover={{ filter: "brightness(90%)" }}
           src={props.image}
           boxSize="320px"
           objectFit="cover"
           borderRadius="5px"
-          />
+        />
       </Box>
 
       <Modal isOpen={isOpen} onClose={onClose} size="md">
         <ModalOverlay />
-        <ModalContent 
+        <ModalContent
           bg="linear-gradient(203.74deg, #FF3333 -12.79%, #FF3333 -12.78%, #FF7B55 75.36%)"
-          p="20px">
-          <ModalCloseButton color="white"/>
+          p="20px"
+        >
+          <ModalCloseButton color="white" />
           <ModalBody>
-            <Image 
+            <Image
               src={props.image}
               boxSize="auto"
               objectFit="cover"
               borderRadius="5px"
-              py="10px"/>
-            <Text 
+              py="10px"
+            />
+            <Text
               fontFamily="HKGrotesk"
               fontWeight="bold"
               fontSize="1rem"
               color="white"
-              py="10px">
-              {props.title}</Text>
-            <Text 
+              py="10px"
+            >
+              {props.title}
+            </Text>
+            <Text
               fontFamily="HKGrotesk"
               fontSize="1rem"
               color="white"
-              py="10px">
+              py="10px"
+            >
               {props.desc}
               <Link
                 href={props.link}
@@ -74,7 +79,10 @@ function Card(props) {
                 fontSize="1rem"
                 color={theme.colors.brand.tedred}
                 isExternal
-                > Read More</Link>
+              >
+                {" "}
+                Read More
+              </Link>
             </Text>
           </ModalBody>
         </ModalContent>
@@ -83,10 +91,10 @@ function Card(props) {
   );
 }
 
-const IGMicroblog = ({data}) => {
+const IGMicroblog = ({ data }) => {
   return (
     <Flex
-      bg="linear-gradient(255.02deg, #E62B1E 22.91%, rgba(240, 89, 43, 0.9) 99.42%);" 
+      bg="linear-gradient(255.02deg, #E62B1E 22.91%, rgba(240, 89, 43, 0.9) 99.42%);"
       bgSize="fill"
       w="100%"
       h="fit-content"
@@ -100,18 +108,20 @@ const IGMicroblog = ({data}) => {
         py="2%"
         flexWrap="wrap"
         justifyContent="space-evenly"
-        >
+      >
         {data.posts.length > 0 ? (
-          data.posts.map((post) => 
-            <Card 
+          data.posts.map((post) => (
+            <Card
               key={post.key}
               image={post.image}
               title={post.title}
               desc={post.description}
               link={post.link}
             />
-          )
-        ) : <header>No posts yet</header>}
+          ))
+        ) : (
+          <header>No posts yet</header>
+        )}
       </Flex>
     </Flex>
   );

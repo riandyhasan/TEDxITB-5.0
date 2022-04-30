@@ -23,10 +23,10 @@ export default function Microblog() {
         direction="column"
       >
         <MicroblogHero />
-        <IGMicroblog data={data}/>
+        <IGMicroblog data={data} />
       </Flex>
     </Layout>
-) : (
-  <Loading/>
-)
+  ) : (
+    <Loading />
+  );
 }

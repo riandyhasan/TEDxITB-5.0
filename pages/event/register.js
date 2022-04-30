@@ -9,17 +9,16 @@ import getRegistrant from "../../hooks/registrant/registrant";
 export default function RegisterEvent() {
   const user = useUser();
   const registrant = getRegistrant();
-  return user.data && !user.loading && !registrant.loading ?(
+  return user.data && !user.loading && !registrant.loading ? (
     <Layout>
       <Head>
         <title>TEDxITB 5.0 | Event</title>
       </Head>
 
-
-        <Hero />
-        <Form user={user} registrant={registrant} />
+      <Hero />
+      <Form user={user} registrant={registrant} />
     </Layout>
-    ) : (
-      <Loading/>
-    )
-  }
+  ) : (
+    <Loading />
+  );
+}

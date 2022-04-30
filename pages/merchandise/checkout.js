@@ -8,15 +8,15 @@ import Loading from "../../components/loading/Loading";
 export default function MerchandiseForm() {
   const data = getCart();
   const user = useUser();
-  return data.cart && user.data && !data.loading && !user.loading ?(
+  return data.cart && user.data && !data.loading && !user.loading ? (
     <Layout>
       <Head>
         <title>TEDxITB 5.0 | Merchandise</title>
       </Head>
 
-      <MerchForm data={data} user={user}/>
+      <MerchForm data={data} user={user} />
     </Layout>
   ) : (
-    <Loading/>
-  )
+    <Loading />
+  );
 }

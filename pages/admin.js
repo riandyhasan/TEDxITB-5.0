@@ -19,7 +19,7 @@ export default function AdminPage() {
     }
   }, []);
 
-  return user.data && !user.loading ?(
+  return user.data && !user.loading ? (
     <Layout>
       <Head>
         <title>TEDxITB 5.0 | Admin</title>
@@ -29,16 +29,29 @@ export default function AdminPage() {
           <Heading textAlign="center">{page}</Heading>
           <Flex justify="center" py="1rem">
             <Flex gridGap="2rem">
-              <Text cursor="pointer" onClick={() => setPage("Registrant")} borderBottom={page == "Registrant" ? "3px solid #E62B1E" : null} color={page == "Registrant" ?"#E62B1E" : "black"}>Event Registrant</Text>
-              <Text cursor="pointer" onClick={() => setPage("Merch")} borderBottom={page == "Merch" ? "3px solid #E62B1E" : null} color={page == "Merch" ?"#E62B1E" : "black"}>Merch</Text>
+              <Text
+                cursor="pointer"
+                onClick={() => setPage("Registrant")}
+                borderBottom={page == "Registrant" ? "3px solid #E62B1E" : null}
+                color={page == "Registrant" ? "#E62B1E" : "black"}
+              >
+                Event Registrant
+              </Text>
+              <Text
+                cursor="pointer"
+                onClick={() => setPage("Merch")}
+                borderBottom={page == "Merch" ? "3px solid #E62B1E" : null}
+                color={page == "Merch" ? "#E62B1E" : "black"}
+              >
+                Merch
+              </Text>
             </Flex>
           </Flex>
-        <Flex w="100%" justifyContent="center" alignItems="center">
-        {page == "Merch" ? <Merch /> : null}
-        {page == "Registrant" ? <Registrant/> : null}
+          <Flex w="100%" justifyContent="center" alignItems="center">
+            {page == "Merch" ? <Merch /> : null}
+            {page == "Registrant" ? <Registrant /> : null}
+          </Flex>
         </Flex>
-        </Flex>
-
       ) : (
         <Flex w="100%" minH="100vh" justifyContent="center" alignItems="center">
           <Heading fontSize="4em">No Access</Heading>
@@ -46,6 +59,6 @@ export default function AdminPage() {
       )}
     </Layout>
   ) : (
-    <Loading/>
-  )
+    <Loading />
+  );
 }

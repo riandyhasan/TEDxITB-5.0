@@ -91,9 +91,9 @@ const HistorySection = () => {
       </Text>
       <Grid
         h="max-content"
-        w='100%'
-        templateRows='repeat(4, 1fr)'
-        templateColumns='repeat(4, 1fr)'
+        w="100%"
+        templateRows="repeat(4, 1fr)"
+        templateColumns="repeat(4, 1fr)"
         bg="white"
         px={{ base: "0px", lg: "100px" }}
         justifyItems="center"
