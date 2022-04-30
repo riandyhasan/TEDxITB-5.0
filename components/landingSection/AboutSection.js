@@ -15,10 +15,7 @@ const AboutSection = () => {
       >
         About TEDx
       </Text>
-      <Flex
-      direction="column"
-      px="8vw"
-      >
+      <Flex direction="column" px="8vw">
         <Flex
           direction={{ base: "column", lg: "row" }}
           py="2%"
@@ -40,7 +37,7 @@ const AboutSection = () => {
             <Text
               fontFamily="HKGrotesk"
               fontWeight="thin"
-              fontSize={{base: "0.85rem", sm: "1.2rem"}}
+              fontSize={{ base: "0.85rem", sm: "1.2rem" }}
               color="#000000"
               textAlign="justify"
             >
@@ -77,7 +74,7 @@ const AboutSection = () => {
             <Text
               fontFamily="HKGrotesk"
               fontWeight="thin"
-              fontSize={{base: "0.85rem", sm: "1.2rem"}}
+              fontSize={{ base: "0.85rem", sm: "1.2rem" }}
               color="#000000"
               textAlign="justify"
             >

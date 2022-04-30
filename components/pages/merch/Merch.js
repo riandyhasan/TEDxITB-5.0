@@ -30,7 +30,7 @@ import { useRouter } from "next/router";
 import { db } from "../../../utils/firebase";
 import { addDoc, collection, updateDoc, doc } from "firebase/firestore";
 
-export default function MerchandisePage({data, dataCart}) {
+export default function MerchandisePage({ data, dataCart }) {
   const [searchBarInput, setSearchBarInput] = useState("");
   const [categoryInput, setCategoryInput] = useState("all");
   const [showOpen, setShowOpen] = useState(0);

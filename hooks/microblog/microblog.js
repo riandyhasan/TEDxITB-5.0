@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { db } from "../../utils/firebase";
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
 
-
 export default function getPosts() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -16,13 +15,13 @@ export default function getPosts() {
       setPosts(
         response.docs.map((doc) => ({
           id: doc.id,
-          ...doc.data()
+          ...doc.data(),
         }))
       );
       setLoading(false);
       setError(null);
     } catch (e) {
-      setError (e);
+      setError(e);
     }
   }
 

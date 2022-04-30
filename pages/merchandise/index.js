@@ -8,14 +8,14 @@ import Loading from "../../components/loading/Loading";
 export default function MerchandisePage() {
   const data = getMerch();
   const dataCart = getCart();
-  return data.merch && !data.loading && !dataCart.loading ?  (
+  return data.merch && !data.loading && !dataCart.loading ? (
     <Layout>
       <Head>
         <title>TEDxITB 5.0 | Merchandise</title>
       </Head>
-      <Merch data={data} dataCart={dataCart}/>
+      <Merch data={data} dataCart={dataCart} />
     </Layout>
   ) : (
-    <Loading/>
-  )
+    <Loading />
+  );
 }

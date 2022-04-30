@@ -4,13 +4,14 @@ import { Box, Text, Flex, Heading, Image, ScaleFade } from "@chakra-ui/react";
 const HeroSection = () => {
   return (
     <Flex
-      bg="linear-gradient(255.02deg, #E62B1E 22.91%, rgba(240, 89, 43, 0.9) 99.42%);" 
+      bg="linear-gradient(255.02deg, #E62B1E 22.91%, rgba(240, 89, 43, 0.9) 99.42%);"
       bgSize="fill"
       w="100vw"
       h="100vh"
       minH="350px"
       align="center"
-      justify="center">
+      justify="center"
+    >
       <ScaleFade
         in={true}
         initialScale="0.8"
@@ -28,7 +29,8 @@ const HeroSection = () => {
           minH="350px"
           align="center"
           justify="center"
-          direction="column">
+          direction="column"
+        >
           <Image
             borderRadius="full"
             maxW="200px"
@@ -37,9 +39,9 @@ const HeroSection = () => {
             h="auto"
             src="../assets/images/landingPage/Logo TEDxITB 5.png"
             bg="white"
-            alt="Logo TEDxITB 5.0" />
-          <Box
-            marginTop={{ base: "6vh", sm: "10vh" }}/>
+            alt="Logo TEDxITB 5.0"
+          />
+          <Box marginTop={{ base: "6vh", sm: "10vh" }} />
           <Heading
             fontFamily="HKGrotesk"
             fontWeight="extrabold"
@@ -47,7 +49,8 @@ const HeroSection = () => {
             color="white"
             textShadow="7px 6px 3px #00000040"
             marginBottom="1vh"
-            textAlign="center">
+            textAlign="center"
+          >
             TEDxITB 5.0
           </Heading>
           <Text
@@ -55,7 +58,8 @@ const HeroSection = () => {
             fontWeight="semibold"
             fontSize="1.6rem"
             color="white"
-            textShadow="7px 6px 3px #00000040">
+            textShadow="7px 6px 3px #00000040"
+          >
             Daydreamers
           </Text>
         </Flex>

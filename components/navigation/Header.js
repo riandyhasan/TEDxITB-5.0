@@ -20,7 +20,11 @@ const LINKS = [
   {
     name: "Microblog",
     path: "/microblog",
-  }
+  },
+  {
+    name: "Event",
+    path: "/event",
+  },
 ];
 
 export default function Header({ ...props }) {
@@ -100,7 +104,7 @@ export default function Header({ ...props }) {
           })}
           {user.data && user.profile.admin == 1 ? (
             <Box>
-              <Link href="/transaction">
+              <Link href="/admin">
                 <Text
                   fontSize="0.9em"
                   fontWeight="extrabold"
@@ -109,7 +113,7 @@ export default function Header({ ...props }) {
                   textShadow="0px 2.3px 1.6px rgba(0, 0, 0, 0.35)"
                   color="brand.tedred"
                 >
-                  Transaction
+                  Admin
                 </Text>
               </Link>
             </Box>
