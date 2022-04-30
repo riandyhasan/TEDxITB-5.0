@@ -155,6 +155,7 @@ export default function RegisterEvent({ user, registrant }) {
           spreadingQuestion: spread,
         });
         const emailBody = {
+          email: email,
           name: name,
         };
         emailjs
