@@ -42,11 +42,11 @@ export default function Event({ user }) {
           Our Main Event
         </Heading>
 
-        <Flex gridGap="2rem" justify="center">
+        <Flex gridGap="2rem" justify="center" alignItems={{base: "center", md:"flex-start"}} flexDir={{base:"column", md:"row"}}>
           <Box w={{ base: "200px", md: "350px" }}>
             <Image src="/assets/images/poster/early-bird-event.jpg" />
           </Box>
-          <Text maxW="40%" mt="1rem" fontSize="1.1em">
+          <Text maxW={{base:"90%", md:"40%"}} mt="1rem" fontSize="1.1em">
             We would like to invite our audience to take a step into the world
             of dreams through the theme of daydreamers. To take a journey into a
             world where the limit is your own imagination. Ideas are the
