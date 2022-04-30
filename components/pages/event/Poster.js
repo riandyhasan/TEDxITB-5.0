@@ -43,7 +43,7 @@ export default function Event({ user }) {
         </Heading>
 
         <Flex gridGap="2rem" justify="center" alignItems={{base: "center", md:"flex-start"}} flexDir={{base:"column", md:"row"}}>
-          <Box w={{ base: "200px", md: "350px" }}>
+          <Box w={{ base: "300px", md: "400px" }}>
             <Image src="/assets/images/poster/early-bird-event.png" />
           </Box>
           <Text maxW={{base:"90%", md:"40%"}} mt="1rem" fontSize="1.1em">
