@@ -127,7 +127,7 @@ export default function RegisterEvent({ user, registrant }) {
         });
       } else {
         const today = new Date();
-        const early = new Date("2022-05-06");
+        const early = new Date("2022-05-04");
         const normal = new Date("2022-05-18");
         const late = new Date("2022-05-19");
         let ticketWave = "Out of registration date";
