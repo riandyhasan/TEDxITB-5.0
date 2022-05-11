@@ -9,6 +9,7 @@ import {
   Th,
   Td,
   Box,
+  Text
 } from "@chakra-ui/react";
 import getRegistrant from "../../../hooks/registrant/registrant";
 import XLSX from "xlsx";
@@ -29,9 +30,38 @@ export default function EventRegistrant() {
     XLSX.writeFile(workbook, `Event Registrant TEDxITB - ${today}.xlsx`);
   };
 
+  let online = 0;
+  let offline = 0;
+  let normal = 0;
+  let earlybird = 0;
+
+  registrant?.map((i) =>{
+    if(i.ticketType == "Online"){
+      online += 1;
+    }else if(i.ticketType == "Offline"){
+      offline += 1;
+    }
+    if(i.ticketWave == "Early Bird" || i.ticketWave == "Early bird"){
+      earlybird += 1;
+    }else if(i.ticketWave == "Normal"){
+      normal += 1;
+    }
+  })
+
   return (
     <Flex w="80%" minH="80vh" flexDir="column">
-      <Flex w="100%" justifyContent="flex-end" my="1rem">
+      <Flex w="100%" justifyContent="space-between" alignItems="center" my="1rem">
+        <Box color="brand.tedred">
+          <Text>Total Registrants: {registrant.length}</Text>
+          <Flex gridGap="1rem"> 
+            <Text>Offline: {offline}</Text>
+            <Text>Online: {online}</Text>
+          </Flex>
+          <Flex gridGap="1rem"> 
+            <Text>Early Bird: {earlybird}</Text>
+            <Text>Normal: {normal}</Text>
+          </Flex>
+        </Box>
         <Box
           color="white"
           bg="brand.gradientRed"
