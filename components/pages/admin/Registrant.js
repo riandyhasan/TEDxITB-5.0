@@ -52,7 +52,7 @@ export default function EventRegistrant() {
     <Flex w="80%" minH="80vh" flexDir="column">
       <Flex w="100%" justifyContent="space-between" alignItems="center" my="1rem">
         <Box color="brand.tedred">
-          <Text>Total Registrants: {registrant.length}</Text>
+          <Text>Total Registrants: {registrant ? registrant.length : 0}</Text>
           <Flex gridGap="1rem"> 
             <Text>Offline: {offline}</Text>
             <Text>Online: {online}</Text>
