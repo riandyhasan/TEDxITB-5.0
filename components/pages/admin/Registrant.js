@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useState } from "react";
 import {
   Flex,
   Heading,
@@ -9,14 +9,30 @@ import {
   Th,
   Td,
   Box,
-  Text
+  Text,
+  useDisclosure,
+  useToast,
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
+  Button
 } from "@chakra-ui/react";
-import getRegistrant from "../../../hooks/registrant/registrant";
+import { db } from "../../../utils/firebase";
+import { updateDoc, doc } from "firebase/firestore";
 import XLSX from "xlsx";
+import emailjs from "emailjs-com";
 
-export default function EventRegistrant() {
-  const data = getRegistrant();
+export default function EventRegistrant({data}) {
   const registrant = data.registrant;
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const toast = useToast();
+  const [id, setID] = useState();
+  const [email, setEmail] = useState();
+  const [type, setType] = useState();
+
 
   const downloadExcel = () => {
     XLSX = require("xlsx");
@@ -29,6 +45,57 @@ export default function EventRegistrant() {
     today.toISOString().split("T")[0];
     XLSX.writeFile(workbook, `Event Registrant TEDxITB - ${today}.xlsx`);
   };
+
+  const handleClose = () => {
+    setID("");
+    setEmail("");
+    setType("");
+    onClose();
+  }
+
+  const handleSendEmail = (id, email, type) => {
+    setID(id);
+    setEmail(email);
+    setType(type);
+    onOpen();
+  }
+
+  async function sendEmail(){
+    try{
+      const docRef = doc(db, "event-registrant", id);
+      await updateDoc(docRef, {
+        isEmailSend: true,
+      });
+      const emailBody = {
+        email: email,
+      };
+      let emailType = "normal";
+      if(type == "Normal"){
+        emailType = "normal";
+      }else{
+        emailType = "early"
+      }
+      emailjs
+      .send("tedxitb", emailType, emailBody, "xAzVAXE_gxwM2kw11")
+      .then(
+        (result) => {
+          onClose();
+          toast({
+            title: "Email send!",
+            description: "The confirmation email sent successfully",
+            status: "success",
+            duration: 4000,
+            isClosable: true,
+          });
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
+    }catch(e){
+      console.log(e)
+    }
+  }
 
   let online = 0;
   let offline = 0;
@@ -48,7 +115,34 @@ export default function EventRegistrant() {
     }
   })
 
+
   return (
+    <>
+          <AlertDialog
+        isOpen={isOpen}
+        onClose={onClose}
+      >
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+              Send Email
+            </AlertDialogHeader>
+
+            <AlertDialogBody>
+              Are you sure to send the confirmation email for {email} ?
+            </AlertDialogBody>
+
+            <AlertDialogFooter>
+              <Button  onClick={handleClose}>
+                Cancel
+              </Button>
+              <Button colorScheme='red' onClick={sendEmail} ml={3}>
+                Send
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
     <Flex w="80%" minH="80vh" flexDir="column">
       <Flex w="100%" justifyContent="space-between" alignItems="center" my="1rem">
         <Box color="brand.tedred">
@@ -102,6 +196,9 @@ export default function EventRegistrant() {
               How do you want to utilize the ideas you get from TEDxITB to
               others?
             </Th>
+            <Th>
+              Action
+            </Th>
           </Thead>
           <Tbody>
             {registrant && registrant.length ? (
@@ -119,6 +216,25 @@ export default function EventRegistrant() {
                   <Td>{i.findEvent}</Td>
                   <Td>{i.reasonQuestion}</Td>
                   <Td>{i.spreadingQuestion}</Td>
+                  <Td>
+                  {i.isEmailSend ?
+                  <Text color="brand.tedred" textAlign="center">Sent</Text>
+                  :
+                  <Box
+                    color="white"
+                    bg="brand.gradientRed"
+                    fontWeight="bold"
+                    borderRadius="19px"
+                    px="3rem"
+                    py="0.4rem"
+                    cursor="pointer"
+                    fontSize="0.85em"
+                    onClick={() => handleSendEmail(i.id, i.email, i.ticketWave)}
+                  >
+                    Send Email
+                  </Box>
+                  }
+                  </Td>
                 </Tr>
               ))
             ) : (
@@ -128,5 +244,7 @@ export default function EventRegistrant() {
         </Table>
       </Box>
     </Flex>
+    </>
+
   );
 }
