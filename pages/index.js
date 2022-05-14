@@ -22,9 +22,9 @@ export default function Home() {
         direction="column"
       >
         <HeroSection />
+        <AboutSection />
         <NumbersSection />
         <HistorySection />
-        <AboutSection />
       </Flex>
     </Layout>
   );
