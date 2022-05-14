@@ -4,6 +4,8 @@ import Layout from "../components/navigation/Layout";
 import Merch from "../components/pages/admin/Merch";
 import Registrant from "../components/pages/admin/Registrant";
 import useUser from "../hooks/user/user";
+import getRegistrant from "../hooks/registrant/registrant";
+import getTransaction from "../hooks/transaction/transaction";
 import { useRouter } from "next/router";
 import { Flex, Heading, Text } from "@chakra-ui/react";
 import Loading from "../components/loading/Loading";
@@ -12,6 +14,8 @@ export default function AdminPage() {
   const user = useUser();
   const router = useRouter();
   const [page, setPage] = useState("Registrant");
+  const registrant = getRegistrant();
+  const transaction = getTransaction();
 
   useEffect(() => {
     if (user.data) {
@@ -19,7 +23,7 @@ export default function AdminPage() {
     }
   }, []);
 
-  return user.data && !user.loading ? (
+  return user.data && !user.loading && !registrant.loading && !transaction.loading ? (
     <Layout>
       <Head>
         <title>TEDxITB 5.0 | Admin</title>
@@ -48,8 +52,8 @@ export default function AdminPage() {
             </Flex>
           </Flex>
           <Flex w="100%" justifyContent="center" alignItems="center">
-            {page == "Merch" ? <Merch /> : null}
-            {page == "Registrant" ? <Registrant /> : null}
+            {page == "Merch" ? <Merch data={transaction} /> : null}
+            {page == "Registrant" ? <Registrant data={registrant} /> : null}
           </Flex>
         </Flex>
       ) : (

@@ -12,11 +12,9 @@ import {
   ListItem,
   Box,
 } from "@chakra-ui/react";
-import getTransaction from "../../../hooks/transaction/transaction";
 import XLSX from "xlsx";
 
-export default function MerchDetail() {
-  const data = getTransaction();
+export default function MerchDetail({data}) {
   const transaction = data.transaction;
 
   const formatter = Intl.NumberFormat("en-US", {

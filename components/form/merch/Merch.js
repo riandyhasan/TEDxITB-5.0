@@ -300,7 +300,6 @@ export default function MerchForm({ data, user }) {
       cart?.map((i) => deleteItem(i.id));
       router.push("/");
     } catch (e) {
-      console.log(e);
     }
   };
 
@@ -329,7 +328,6 @@ export default function MerchForm({ data, user }) {
           getDownloadURL(ref(storage, `merch-proof/${name}-${date}.jpg`)).then(
             (url) => {
               proof = url;
-              console.log(url);
               addToFirestore();
             }
           );
