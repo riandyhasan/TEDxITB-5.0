@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Text, Flex } from "@chakra-ui/react";
+import { Box, Text, Flex, Image } from "@chakra-ui/react";
 
 const AboutSection = () => {
   return (
@@ -85,6 +85,35 @@ const AboutSection = () => {
               way or another, it is a dream that has a plan, like a destination
               but with the map to get there. the boundaries and redefine their
               own limitations.
+            </Text>
+          </Box>
+        </Flex>
+        <Flex
+          direction="column"
+          py="40px"
+          alignItems="center"
+        >
+          <Box flex="1" px="5px" maxW={{ base:"100%", md:"60%"}}>
+            <a href="https://virtualfair.itb.ac.id/" target="_blank" style={{ textDecoration: "none" }}>
+            <Image src="/assets/images/poster/banner.jpg" cursor="pointer"/>
+            </a>
+          </Box>
+          <Box flex="3" px="20px" mt="1rem">
+            <Text
+              fontFamily="HKGrotesk"
+              fontWeight="thin"
+              fontSize={{ base: "0.85rem", sm: "1.2rem" }}
+              color="#000000"
+              textAlign="justify"
+            >
+              This year, we collaborate with ITB Career Cente's 2022 
+              Virtual Integrated Career Days to help our audience in 
+              pursuing their dreams. Click the banner above or visit {" "}
+              <span>
+              <a href="https://virtualfair.itb.ac.id/" target="_blank" style={{ textDecoration: "none", color:"#E62B1E" }}>
+              virtualfair.itb.ac.id
+              </a>
+              </span> for more information
             </Text>
           </Box>
         </Flex>
