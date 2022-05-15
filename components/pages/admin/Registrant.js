@@ -181,13 +181,13 @@ export default function EventRegistrant({data}) {
           <Thead>
             <Th>Email</Th>
             <Th>Name</Th>
-            <Th>Address</Th>
+            {/* <Th>Address</Th>
             <Th>Phone</Th>
             <Th>Occupation</Th>
-            <Th>Institution</Th>
+            <Th>Institution</Th> */}
             <Th>Ticket Type</Th>
             <Th>Ticket Wave</Th>
-            <Th>Are you fully vaccinated by third dose/booster?</Th>
+            {/* <Th>Are you fully vaccinated by third dose/booster?</Th>
             <Th>Where did you find out about this event?</Th>
             <Th>
               What are your reasons and expectations for coming to TEDxITB?
@@ -195,7 +195,7 @@ export default function EventRegistrant({data}) {
             <Th>
               How do you want to utilize the ideas you get from TEDxITB to
               others?
-            </Th>
+            </Th> */}
             <Th>
               Action
             </Th>
@@ -206,16 +206,16 @@ export default function EventRegistrant({data}) {
                 <Tr>
                   <Td>{i.email}</Td>
                   <Td>{i.name}</Td>
-                  <Td>{i.address}</Td>
-                  <Td>{i.phone}</Td>
-                  <Td>{i.occupation}</Td>
-                  <Td>{i.institution}</Td>
+                  {/* <Td>{i.address}</Td> */}
+                  {/* <Td>{i.phone}</Td> */}
+                  {/* <Td>{i.occupation}</Td> */}
+                  {/* <Td>{i.institution}</Td> */}
                   <Td>{i.ticketType}</Td>
                   <Td>{i.ticketWave}</Td>
-                  <Td>{i.vaccinated}</Td>
-                  <Td>{i.findEvent}</Td>
-                  <Td>{i.reasonQuestion}</Td>
-                  <Td>{i.spreadingQuestion}</Td>
+                  {/* <Td>{i.vaccinated}</Td> */}
+                  {/* <Td>{i.findEvent}</Td> */}
+                  {/* <Td>{i.reasonQuestion}</Td> */}
+                  {/* <Td>{i.spreadingQuestion}</Td> */}
                   <Td>
                   {i.isEmailSend ?
                   <Text color="brand.tedred" textAlign="center">Sent</Text>
