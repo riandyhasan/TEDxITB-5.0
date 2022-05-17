@@ -28,11 +28,15 @@ import {
   AlertDialogContent,
   AlertDialogOverlay,
   Button,
+  Center
 } from "@chakra-ui/react";
 import { db } from "../../../utils/firebase";
 import { setDoc, doc } from "firebase/firestore";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useRouter } from "next/router";
 import { MdMarkEmailRead } from "react-icons/md";
+import { BsUpload } from "react-icons/bs";
+import { useDropzone } from "react-dropzone";
 import emailjs from "emailjs-com";
 
 export default function RegisterEvent({ user, registrant }) {
@@ -54,6 +58,7 @@ export default function RegisterEvent({ user, registrant }) {
   const [vaccinated, setVaccinated] = useState("1");
   const [reasons, setReasons] = useState("");
   const [spread, setSpread] = useState("");
+  const [referral, setReferral] = useState("");
   const toast = useToast();
   const router = useRouter();
   const {
@@ -68,6 +73,13 @@ export default function RegisterEvent({ user, registrant }) {
   } = useDisclosure();
   const cancelRef = React.useRef();
 
+  const { acceptedFiles, fileRejections, getRootProps, getInputProps } =
+  useDropzone({
+    accept: "image/jpeg,image/png",
+    multiple: false,
+    maxSize: 10097152,
+  });
+
   function WordCount(str) {
     return str.split(" ").length;
   }
@@ -81,6 +93,10 @@ export default function RegisterEvent({ user, registrant }) {
     } else if (findEvent == "3") {
       find = "LINE/Whatsapp Broadcast";
     } else if (findEvent == "4") {
+      find = "ITB Career Center Participant";
+    }else if (findEvent == "5"){
+      find = "Committee Referral";
+    }else if (findEvent == "6"){
       find = findEventOther;
     }
     return find;
@@ -91,8 +107,20 @@ export default function RegisterEvent({ user, registrant }) {
     if (WordCount(reasons) > 100 || WordCount(spread) > 100) {
       err = "Opinion questions max 100 words!";
     }
-    if (reasons == "" || spread == "") {
-      err = "Opinion questions are required";
+    if(findEvent == "4"){
+      if (!acceptedFiles || acceptedFiles.length < 1) {
+        err = "Participating proof is required";
+      }
+    }
+    if(findEvent == "5"){
+      if(referral == ""){
+        err = "Committee referree full name is required";
+      }
+    }
+    if(findEvent != "4" && findEvent != "5"){
+      if (reasons == "" || spread == "") {
+        err = "Opinion questions are required";
+      }
     }
     if (occupation == "") {
       err = "Occupation is required";
@@ -139,36 +167,114 @@ export default function RegisterEvent({ user, registrant }) {
           ticketWave = "Late";
         }
         const find = findEventValue();
-        await setDoc(doc(db, "event-registrant", user.userID), {
-          name: name,
-          email: email,
-          address: address,
-          phone: phone,
-          occupation: occupation,
-          institution: institution,
-          findEvent: find,
-          ticketType: ticketType == "1" ? "Offline" : "Online",
-          ticketWave: ticketWave,
-          vaccinated:
-            ticketType == "2" ? "Online" : vaccinated == "1" ? "Yes" : "No",
-          reasonQuestion: reasons,
-          spreadingQuestion: spread,
-        });
-        const emailBody = {
-          email: email,
-          name: name,
-        };
-        emailjs
-          .send("tedxitb5.0", "tedxitb5", emailBody, "QUWx86By2g9osljF4")
-          .then(
-            (result) => {
-              console.log(result.text);
-            },
-            (error) => {
-              console.log(error.text);
-            }
-          );
-        onOpenModal();
+        if(findEvent == "4"){
+          const storage = getStorage();
+          const storageRef = ref(storage, `registrant/ITB-Career-Center/${name}.jpg`);
+          uploadBytes(storageRef, acceptedFiles[0]).then((snapshot) => {
+            getDownloadURL(ref(storage, `registrant/ITB-Career-Center/${name}.jpg`)).then(
+              async function (url) {
+                try{
+                  await setDoc(doc(db, "event-registrant", user.userID), {
+                    name: name,
+                    email: email,
+                    address: address,
+                    phone: phone,
+                    occupation: occupation,
+                    institution: institution,
+                    findEvent: find,
+                    ticketType: ticketType == "1" ? "Offline" : "Online",
+                    ticketWave: ticketWave,
+                    vaccinated:
+                      ticketType == "2" ? "Online" : vaccinated == "1" ? "Yes" : "No",
+                    reasonQuestion: "-",
+                    spreadingQuestion: "-",
+                    careerCenterProof: url,
+                  });
+                  const emailBody = {
+                    email: email,
+                    name: name,
+                  };
+                  emailjs
+                    .send("tedxitb5.0", "tedxitb5", emailBody, "QUWx86By2g9osljF4")
+                    .then(
+                      (result) => {
+                        console.log(result.text);
+                      },
+                      (error) => {
+                        console.log(error.text);
+                      }
+                    );
+                  onOpenModal();
+                }catch(e){
+                  // console.log(e);
+                }
+              }
+            );
+          });
+        }else if(findEvent == "5"){
+          await setDoc(doc(db, "event-registrant", user.userID), {
+            name: name,
+            email: email,
+            address: address,
+            phone: phone,
+            occupation: occupation,
+            institution: institution,
+            findEvent: find,
+            ticketType: ticketType == "1" ? "Offline" : "Online",
+            ticketWave: ticketWave,
+            vaccinated:
+              ticketType == "2" ? "Online" : vaccinated == "1" ? "Yes" : "No",
+            reasonQuestion: "-",
+            spreadingQuestion: "-",
+            committeeReferral: referral
+          });
+          const emailBody = {
+            email: email,
+            name: name,
+          };
+          emailjs
+            .send("tedxitb5.0", "tedxitb5", emailBody, "QUWx86By2g9osljF4")
+            .then(
+              (result) => {
+                console.log(result.text);
+              },
+              (error) => {
+                console.log(error.text);
+              }
+            );
+          onOpenModal();
+        }else{
+          await setDoc(doc(db, "event-registrant", user.userID), {
+            name: name,
+            email: email,
+            address: address,
+            phone: phone,
+            occupation: occupation,
+            institution: institution,
+            findEvent: find,
+            ticketType: ticketType == "1" ? "Offline" : "Online",
+            ticketWave: ticketWave,
+            vaccinated:
+              ticketType == "2" ? "Online" : vaccinated == "1" ? "Yes" : "No",
+            reasonQuestion: reasons,
+            spreadingQuestion: spread,
+          });
+          const emailBody = {
+            email: email,
+            name: name,
+          };
+          emailjs
+            .send("tedxitb5.0", "tedxitb5", emailBody, "QUWx86By2g9osljF4")
+            .then(
+              (result) => {
+                console.log(result.text);
+              },
+              (error) => {
+                console.log(error.text);
+              }
+            );
+          onOpenModal();
+        }
       }
     } catch (e) {
       var msg = e.message;
@@ -470,8 +576,14 @@ export default function RegisterEvent({ user, registrant }) {
                         <Radio colorScheme="red" value="3">
                           LINE/Whatsapp Broadcast
                         </Radio>
+                        <Radio colorScheme="red" value="4">
+                          ITB Career Center Participant
+                        </Radio>
+                        <Radio colorScheme="red" value="5">
+                        Committee Referral
+                        </Radio>
                         <Flex alignItems="center" gridGap="1.5rem">
-                          <Radio colorScheme="red" value="4">
+                          <Radio colorScheme="red" value="6">
                             Others
                           </Radio>
                           <Input
@@ -537,6 +649,75 @@ export default function RegisterEvent({ user, registrant }) {
                   </GridItem>
                 ) : null}
 
+                 {findEvent == "5" ? 
+                 <GridItem>
+                  <FormControl isRequired>
+                    <FormLabel fontSize="1em" htmlFor="referral">
+                    Please input your TEDxITB committee referree full name
+                    </FormLabel>
+                    <Input
+                      fontSize="1em"
+                      id="referral"
+                      placeholder="Committee referree full name"
+                      borderRadius="19px"
+                      border="2px"
+                      borderColor="black"
+                      value={referral}
+                      onChange={(e) => setReferral(e.target.value)}
+                    />
+                  </FormControl>
+                </GridItem>
+                : null
+                }
+
+                {findEvent == "4" ? 
+                 <GridItem>
+              <FormControl isRequired>
+              <FormLabel fontSize="1em" htmlFor="email">
+                Please upload your proof of participating ITB Career Center online event (screenshot must include your name)
+                </FormLabel>
+                <Center
+                  {...getRootProps({ className: "dropzone" })}
+                  textAlign="center"
+                  flexDirection="column"
+                  border="2px dashed #000000"
+                  borderRadius="19px"
+                  py="1rem"
+                  px="3rem"
+                >
+                  <input {...getInputProps()} />
+                  {acceptedFiles && acceptedFiles.length ? (
+                    <Text fontWeight={600} fontSize="0.75em">
+                      {acceptedFiles.map((f) => f.name)}
+                    </Text>
+                  ) : (
+                    <>
+                      <BsUpload size="2em" />
+                      <Text fontWeight={600} fontSize="0.75em">
+                        Drag and Drop File <br />
+                        or
+                      </Text>
+                      <Box
+                        color="white"
+                        bg="brand.gradientRed"
+                        borderRadius="19px"
+                        fontSize="0.6em"
+                        px="2rem"
+                        py="0.4rem"
+                        cursor="pointer"
+                      >
+                        Browse
+                      </Box>
+                    </>
+                  )}
+                </Center>
+              </FormControl>
+                </GridItem>
+                : null
+                }
+
+            {findEvent == "4" || findEvent == "5" ? null : 
+                <>
                 <Heading
                   fontFamily="HKGrotesk"
                   fontWeight="bold"
@@ -548,7 +729,7 @@ export default function RegisterEvent({ user, registrant }) {
                   Opinion Questions
                 </Heading>
 
-                <GridItem>
+               <GridItem>
                   <FormControl isRequired>
                     <FormLabel fontSize="1em">
                       What are your reasons and expectations for coming to
@@ -585,6 +766,8 @@ export default function RegisterEvent({ user, registrant }) {
                     />
                   </FormControl>
                 </GridItem>
+                </>
+                }
               </Grid>
 
               <Flex w="100%" justifyContent="flex-end" mt="3rem">
