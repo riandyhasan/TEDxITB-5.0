@@ -197,6 +197,12 @@ export default function EventRegistrant({data}) {
               others?
             </Th> */}
             <Th>
+            Committee Referree Name
+            </Th>
+            <Th>
+              ITB Career Center Proof
+            </Th>
+            <Th>
               Action
             </Th>
           </Thead>
@@ -216,6 +222,15 @@ export default function EventRegistrant({data}) {
                   {/* <Td>{i.findEvent}</Td> */}
                   {/* <Td>{i.reasonQuestion}</Td> */}
                   {/* <Td>{i.spreadingQuestion}</Td> */}
+                  <Td>{i.committeeReferral ? i.committeeReferral : "-"}</Td>
+                  <Td color="red">
+                  {i.careerCenterProof ?
+                    <a href={i.careerCenterProof} target="_blank">
+                      Proof
+                    </a>
+                    : "-"
+                  }
+                  </Td>
                   <Td>
                   {i.isEmailSend ?
                   <Text color="brand.tedred" textAlign="center">Sent</Text>
