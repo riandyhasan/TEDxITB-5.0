@@ -76,7 +76,7 @@ export default function EventRegistrant({data}) {
       const emailBody = {
         email: email,
       };
-      if(type == "Normal"){
+      if(type == "Normal" || type == "Late"){
         if(isITBCC){
           emailjs
           .send("tedxitb", "itbcc", emailBody, "EZS5gx8dMpJhiZ75f")
