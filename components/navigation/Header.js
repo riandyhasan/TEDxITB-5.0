@@ -25,6 +25,11 @@ const LINKS = [
     name: "Event",
     path: "/event",
   },
+  
+  {
+    name: "Partners",
+    path: "/partner",
+  },
 ];
 
 export default function Header({ ...props }) {
