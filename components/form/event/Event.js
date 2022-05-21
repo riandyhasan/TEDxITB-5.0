@@ -34,7 +34,7 @@ import { db } from "../../../utils/firebase";
 import { setDoc, doc } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useRouter } from "next/router";
-import { MdMarkEmailRead } from "react-icons/md";
+import { AiFillCloseCircle } from "react-icons/ai";;
 import { BsUpload } from "react-icons/bs";
 import { useDropzone } from "react-dropzone";
 import emailjs from "emailjs-com";
@@ -395,7 +395,7 @@ export default function RegisterEvent({ user, registrant }) {
           flexWrap="wrap"
           justifyContent="space-evenly"
         >
-          {submitted ? (
+          {/* {submitted ? ( */}
             <Flex
               w="100%"
               align="center"
@@ -411,9 +411,9 @@ export default function RegisterEvent({ user, registrant }) {
                 textShadow="0px 4px 4px #00000040"
                 textAlign="center"
               >
-                You already submitted the form
+                Sorry, registration closed.
               </Heading>
-              <MdMarkEmailRead size="10em" color="#E62B1E" />
+              <AiFillCloseCircle size="10em" color="#E62B1E" />
               <Heading
                 fontFamily="HKGrotesk"
                 fontWeight="bold"
@@ -421,12 +421,12 @@ export default function RegisterEvent({ user, registrant }) {
                 color="black"
                 textAlign="center"
               >
-                Please kindly check your email for confirmation
+                Thank you for your enthusiasm.
               </Heading>
             </Flex>
-          ) : (
-            <>
-              <Heading
+         {/* ) : ( */}
+             {/* <>
+               <Heading
                 fontFamily="HKGrotesk"
                 fontWeight="bold"
                 fontSize={{ base: "1rem", sm: "2rem", md: "3rem" }}
@@ -786,9 +786,9 @@ export default function RegisterEvent({ user, registrant }) {
                 </Box>
               </Flex>
             </>
-          )}
+          )} */}
         </Flex>
       </Flex>
-    </>
+    </> 
   );
 }
