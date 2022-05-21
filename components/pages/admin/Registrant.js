@@ -33,6 +33,7 @@ export default function EventRegistrant({data}) {
   const [email, setEmail] = useState();
   const [type, setType] = useState();
   const [isITBCC, setIsITBCC] = useState(false);
+  const [place, setPlace] = useState("");
 
 
   const downloadExcel = () => {
@@ -55,7 +56,7 @@ export default function EventRegistrant({data}) {
     onClose();
   }
 
-  const handleSendEmail = (id, email, type, itbcc) => {
+  const handleSendEmail = (id, email, type, itbcc, place) => {
     setID(id);
     setEmail(email);
     setType(type);
@@ -64,6 +65,7 @@ export default function EventRegistrant({data}) {
     }else{
       setIsITBCC(false);
     }
+    setPlace(place);
     onOpen();
   }
 
@@ -77,61 +79,86 @@ export default function EventRegistrant({data}) {
         email: email,
       };
       if(type == "Normal" || type == "Late"){
-        if(isITBCC){
-          emailjs
-          .send("tedxitb", "itbcc", emailBody, "EZS5gx8dMpJhiZ75f")
-          .then(
-            (result) => {
-              onClose();
-              toast({
-                title: "Email send!",
-                description: "The confirmation email sent successfully",
-                status: "success",
-                duration: 4000,
-                isClosable: true,
-              });
-            },
-            (error) => {
-              console.log(error.text);
-            }
-          );
-        }else{
-          emailjs
-          .send("tedxitb", "normal", emailBody, "xAzVAXE_gxwM2kw11")
-          .then(
-            (result) => {
-              onClose();
-              toast({
-                title: "Email send!",
-                description: "The confirmation email sent successfully",
-                status: "success",
-                duration: 4000,
-                isClosable: true,
-              });
-            },
-            (error) => {
-              console.log(error.text);
-            }
-          );
-        }
-      }else{
-        emailjs
-        .send("tedxitb", "early", emailBody, "xAzVAXE_gxwM2kw11")
-        .then(
-          (result) => {
-            onClose();
-            toast({
-              title: "Email send!",
-              description: "The confirmation email sent successfully",
-              status: "success",
-              duration: 4000,
-              isClosable: true,
-            });
-          },
-          (error) => {
-            console.log(error.text);
+        if(place == "Offline"){
+          if(isITBCC){
+            emailjs
+            .send("tedxitb", "itbcc", emailBody, "EZS5gx8dMpJhiZ75f")
+            .then(
+              (result) => {
+                onClose();
+                toast({
+                  title: "Email send!",
+                  description: "The confirmation email sent successfully",
+                  status: "success",
+                  duration: 4000,
+                  isClosable: true,
+                });
+              },
+              (error) => {
+                console.log(error.text);
+              }
+            );
+          }else{
+            emailjs
+            .send("tedxitb", "normal", emailBody, "xAzVAXE_gxwM2kw11")
+            .then(
+              (result) => {
+                onClose();
+                toast({
+                  title: "Email send!",
+                  description: "The confirmation email sent successfully",
+                  status: "success",
+                  duration: 4000,
+                  isClosable: true,
+                });
+              },
+              (error) => {
+                console.log(error.text);
+              }
+            );
           }
-        );
+        }else if(place == "Online"){
+          if(isITBCC){
+            emailjs
+            .send("tedxitb", "onlineitbcc", emailBody, "xAzVAXE_gxwM2kw11")
+            .then(
+              (result) => {
+                onClose();
+                toast({
+                  title: "Email send!",
+                  description: "The confirmation email sent successfully",
+                  status: "success",
+                  duration: 4000,
+                  isClosable: true,
+                });
+              },
+              (error) => {
+                console.log(error.text);
+              }
+            );
+          }else{
+            emailjs
+            .send("tedxitb", "online", emailBody, "EZS5gx8dMpJhiZ75f")
+            .then(
+              (result) => {
+                onClose();
+                toast({
+                  title: "Email send!",
+                  description: "The confirmation email sent successfully",
+                  status: "success",
+                  duration: 4000,
+                  isClosable: true,
+                });
+              },
+              (error) => {
+                console.log(error.text);
+              }
+            );
+          }
+        }
+
+      }else{
+
       }
     }catch(e){
       console.log(e)
@@ -285,7 +312,7 @@ export default function EventRegistrant({data}) {
                     py="0.4rem"
                     cursor="pointer"
                     fontSize="0.85em"
-                    onClick={() => handleSendEmail(i.id, i.email, i.ticketWave, i.careerCenterProof)}
+                    onClick={() => handleSendEmail(i.id, i.email, i.ticketWave, i.careerCenterProof, i.ticketType)}
                   >
                     Send Email
                   </Box>
