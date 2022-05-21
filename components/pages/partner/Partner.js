@@ -145,10 +145,10 @@ export default function Event() {
         justifyContent="center"
         my="3rem"
       >
-          <Grid gridTemplateColumns="repeat(2, 1fr)" gap="6rem">
+          <Grid gridTemplateColumns="repeat(2, 1fr)" gap={{ base:"2rem", md:"6rem"}}>
             {sponsors.map((i) => (
-            <GridItem>
-                <Box display="flex" justifyContent="center" alignItems="center" bg="white" p="1rem" w={{ base: "130px", md:"300px" }}>
+            <GridItem key={i}>
+                <Box display="flex" justifyContent="center" alignItems="center" bg="white" p="1rem" w={{ base: "180px", md:"300px" }}>
                     <Image alt={i.name} src={i.img} />
                 </Box>
             </GridItem>
@@ -174,10 +174,10 @@ export default function Event() {
         justifyContent="center"
         my="3rem"
       >
-          <Grid gridTemplateColumns={{ base:"repeat(2, 1fr)", md:"repeat(4, 1fr)" }} gap="2rem">
+          <Grid gridTemplateColumns={{ base:"repeat(3, 1fr)", md:"repeat(4, 1fr)" }} gap="2rem">
             {medpar.map((i) => (
-            <GridItem>
-                <Box display="flex" justifyContent="center" alignItems="center" bg="white" p="1rem" w="150px">
+            <GridItem key={i}>
+                <Box display="flex" justifyContent="center" alignItems="center" bg="white" p="1rem" w={{ base: "100px", md: "150px" }}>
                     <Image alt={i.name} src={i.img} />
                 </Box>
             </GridItem>
