@@ -148,7 +148,7 @@ export default function Event() {
           <Grid gridTemplateColumns="repeat(2, 1fr)" gap={{ base:"2rem", md:"6rem"}}>
             {sponsors.map((i) => (
             <GridItem key={i}>
-                <Box display="flex" justifyContent="center" alignItems="center" bg="white" p="1rem" w={{ base: "180px", md:"300px" }}>
+                <Box display="flex" justifyContent="center" alignItems="center" bg="white" p="1rem" w={{ base: "150px", md:"300px" }}>
                     <Image alt={i.name} src={i.img} />
                 </Box>
             </GridItem>
@@ -181,7 +181,7 @@ export default function Event() {
                     <Image alt={i.name} src={i.img} />
                 </Box>
             </GridItem>
-            ))};
+            ))}
           </Grid>
       </Flex>
     </Flex>
