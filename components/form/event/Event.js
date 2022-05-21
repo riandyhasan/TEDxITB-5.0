@@ -617,9 +617,9 @@ export default function RegisterEvent({ user, registrant }) {
                         <Radio colorScheme="red" value="1">
                           Offline
                         </Radio>
-                        <Radio colorScheme="red" value="2">
+                        {/* <Radio colorScheme="red" value="2">
                           Online
-                        </Radio>
+                        </Radio> */}
                       </Stack>
                     </RadioGroup>
                   </FormControl>
