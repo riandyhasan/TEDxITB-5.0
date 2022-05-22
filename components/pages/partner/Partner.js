@@ -1,39 +1,106 @@
 import { Box, Heading, Flex, Image, Text, Grid, GridItem } from "@chakra-ui/react";
 
 export default function Event() {
-    const sponsors = [
+
+  const sponsors = [
+    {
+      name: "ITB Career Center",
+      img: "https://firebasestorage.googleapis.com/v0/b/tedxitb-32001.appspot.com/o/partners%2Fsponsors%2FITBCC.png?alt=media&token=cfd2600d-f86a-4fd6-a293-f7f9395fad8a",
+      width: 300
+  },
+  {
+      name: "Ditmawa ITB",
+      img: "https://firebasestorage.googleapis.com/v0/b/tedxitb-32001.appspot.com/o/partners%2Fsponsors%2FDitmawa%20ITB.png?alt=media&token=e377d319-62a2-446a-b719-9855467b3d18",
+      width: 300
+  },
+  {
+    name: "Bank Indonesia",
+    img: "https://firebasestorage.googleapis.com/v0/b/tedxitb-32001.appspot.com/o/partners%2Fsponsors%2Fbank-indonesia.png?alt=media&token=f32eed24-a7f2-45af-842e-16d7b5ab7c99",
+    width: 360
+  },
+  {
+    name: "ABB",
+    img: "https://firebasestorage.googleapis.com/v0/b/tedxitb-32001.appspot.com/o/partners%2Fsponsors%2FABB.png?alt=media&token=d791dbab-723b-409a-a628-4bf32070e272",
+    width: 260
+},
+{
+  name: "Rewindbooth",
+  img: "https://firebasestorage.googleapis.com/v0/b/tedxitb-32001.appspot.com/o/partners%2Fsponsors%2FRewindbooth.png?alt=media&token=5563d780-949c-4850-a5a0-ac99f057a0a1",
+  width: 260
+},
+{
+  name: "Nabati",
+  img: "https://firebasestorage.googleapis.com/v0/b/tedxitb-32001.appspot.com/o/partners%2Fsponsors%2FNabati.png?alt=media&token=2f044a6e-230b-49d0-9900-591dd924f2c0",
+  width: 100
+},
+{
+  name: "Amartha",
+  img: "https://firebasestorage.googleapis.com/v0/b/tedxitb-32001.appspot.com/o/partners%2Fsponsors%2FAmartha.png?alt=media&token=1db5fc5b-0ad7-4a76-81ca-facf2421c1e8",
+  width: 140
+},
+{
+  name: "Tiket.com",
+  img: "https://firebasestorage.googleapis.com/v0/b/tedxitb-32001.appspot.com/o/partners%2Fsponsors%2FTiketdotcom.png?alt=media&token=401016bb-b998-4cd1-b353-4981c3d39795",
+  width: 140
+},
+{
+  name: "IM3",
+  img: "https://firebasestorage.googleapis.com/v0/b/tedxitb-32001.appspot.com/o/partners%2Fsponsors%2Fim3.png?alt=media&token=304c4051-a551-4e84-a85d-651e062ff9d8",
+  width: 100
+},
+  ]
+    const sponsorsLine1 = [
         {
             name: "ITB Career Center",
-            img: "https://firebasestorage.googleapis.com/v0/b/tedxitb-32001.appspot.com/o/partners%2Fsponsors%2FITBCC.png?alt=media&token=cfd2600d-f86a-4fd6-a293-f7f9395fad8a"
+            img: "https://firebasestorage.googleapis.com/v0/b/tedxitb-32001.appspot.com/o/partners%2Fsponsors%2FITBCC.png?alt=media&token=cfd2600d-f86a-4fd6-a293-f7f9395fad8a",
+            width: 300
         },
         {
             name: "Ditmawa ITB",
-            img: "https://firebasestorage.googleapis.com/v0/b/tedxitb-32001.appspot.com/o/partners%2Fsponsors%2FDitmawa%20ITB.png?alt=media&token=e377d319-62a2-446a-b719-9855467b3d18"
-        },
-        {
-            name: "ABB",
-            img: "https://firebasestorage.googleapis.com/v0/b/tedxitb-32001.appspot.com/o/partners%2Fsponsors%2FABB.png?alt=media&token=d791dbab-723b-409a-a628-4bf32070e272"
-        },
-        {
-          name: "Nabati",
-          img: "https://firebasestorage.googleapis.com/v0/b/tedxitb-32001.appspot.com/o/partners%2Fsponsors%2FNabati.png?alt=media&token=2f044a6e-230b-49d0-9900-591dd924f2c0"
-        },
-        {
-          name: "Rewindbooth",
-          img: "https://firebasestorage.googleapis.com/v0/b/tedxitb-32001.appspot.com/o/partners%2Fsponsors%2FRewindbooth.png?alt=media&token=5563d780-949c-4850-a5a0-ac99f057a0a1"
-        },
-        {
-          name: "Tiket.com",
-          img: "https://firebasestorage.googleapis.com/v0/b/tedxitb-32001.appspot.com/o/partners%2Fsponsors%2FTiketdotcom.png?alt=media&token=401016bb-b998-4cd1-b353-4981c3d39795"
+            img: "https://firebasestorage.googleapis.com/v0/b/tedxitb-32001.appspot.com/o/partners%2Fsponsors%2FDitmawa%20ITB.png?alt=media&token=e377d319-62a2-446a-b719-9855467b3d18",
+            width: 300
         },
         {
           name: "Bank Indonesia",
-          img: "https://firebasestorage.googleapis.com/v0/b/tedxitb-32001.appspot.com/o/partners%2Fsponsors%2Fbank-indonesia.png?alt=media&token=f32eed24-a7f2-45af-842e-16d7b5ab7c99"
+          img: "https://firebasestorage.googleapis.com/v0/b/tedxitb-32001.appspot.com/o/partners%2Fsponsors%2Fbank-indonesia.png?alt=media&token=f32eed24-a7f2-45af-842e-16d7b5ab7c99",
+          width: 360
         },
-        {
-          name: "IM3",
-          img: "https://firebasestorage.googleapis.com/v0/b/tedxitb-32001.appspot.com/o/partners%2Fsponsors%2Fim3.png?alt=media&token=304c4051-a551-4e84-a85d-651e062ff9d8"
-        },
+    ]
+
+    const sponsorsLine2 = [
+      {
+        name: "ABB",
+        img: "https://firebasestorage.googleapis.com/v0/b/tedxitb-32001.appspot.com/o/partners%2Fsponsors%2FABB.png?alt=media&token=d791dbab-723b-409a-a628-4bf32070e272",
+        width: 260
+    },
+    {
+      name: "Rewindbooth",
+      img: "https://firebasestorage.googleapis.com/v0/b/tedxitb-32001.appspot.com/o/partners%2Fsponsors%2FRewindbooth.png?alt=media&token=5563d780-949c-4850-a5a0-ac99f057a0a1",
+      width: 260
+    },
+    {
+      name: "Nabati",
+      img: "https://firebasestorage.googleapis.com/v0/b/tedxitb-32001.appspot.com/o/partners%2Fsponsors%2FNabati.png?alt=media&token=2f044a6e-230b-49d0-9900-591dd924f2c0",
+      width: 100
+    },
+    ]
+
+    const sponsorsLine3 = [
+      {
+        name: "Amartha",
+        img: "https://firebasestorage.googleapis.com/v0/b/tedxitb-32001.appspot.com/o/partners%2Fsponsors%2FAmartha.png?alt=media&token=1db5fc5b-0ad7-4a76-81ca-facf2421c1e8",
+        width: 140
+      },
+      {
+        name: "Tiket.com",
+        img: "https://firebasestorage.googleapis.com/v0/b/tedxitb-32001.appspot.com/o/partners%2Fsponsors%2FTiketdotcom.png?alt=media&token=401016bb-b998-4cd1-b353-4981c3d39795",
+        width: 140
+      },
+      {
+        name: "IM3",
+        img: "https://firebasestorage.googleapis.com/v0/b/tedxitb-32001.appspot.com/o/partners%2Fsponsors%2Fim3.png?alt=media&token=304c4051-a551-4e84-a85d-651e062ff9d8",
+        width: 100
+      },
     ]
 
     const medpar = [
@@ -114,6 +181,7 @@ export default function Event() {
         img: "https://firebasestorage.googleapis.com/v0/b/tedxitb-32001.appspot.com/o/partners%2Fmedia-partners%2F8eh.png?alt=media&token=706f79f5-406e-40ea-ae54-ae42a0393ac4"
       },
   ]
+  
   return (
     <Flex
       bg="linear-gradient(179.98deg, #E62B1E 0.02%, rgba(255, 255, 255, 0.88) 96.1%);"
@@ -130,7 +198,7 @@ export default function Event() {
             <Heading
             fontFamily="HKGrotesk"
             fontWeight="bold"
-            fontSize={{ base: "1rem", sm: "2rem", md: "3rem" }}
+            fontSize={{ base: "2.2rem", sm: "2rem", md: "3rem" }}
             color="black"
             textShadow="0px 4px 4px #00000040"
             textAlign="center"
@@ -145,21 +213,44 @@ export default function Event() {
         justifyContent="center"
         my="3rem"
       >
-          <Grid gridTemplateColumns="repeat(2, 1fr)" gap={{ base:"2rem", md:"6rem"}}>
-            {sponsors.map((i) => (
-            <GridItem key={i}>
-                <Box display="flex" justifyContent="center" alignItems="center" bg="white" p="1rem" w={{ base: "150px", md:"300px" }}>
+          <Flex display={{ base: "none", md: "flex"}} flexDir="column" gridGap="1rem" alignItems="center" px={{ base:"0", md:"2rem" }} w="100%">
+            <Flex alignItems="center" justifyContent="center" w="100%" gridGap="2rem">
+            {sponsorsLine1.map((i) => (
+                <Box w={i.width} h={i.width} >
+                    <Image alt={i.name} src={i.img} />
+                </Box>
+            ))}
+            </Flex>
+            <Flex alignItems="center" justifyContent="center" w="100%" gridGap="2rem">
+            {sponsorsLine2.map((i) => (
+                <Box w={i.width} h={i.width} >
+                    <Image alt={i.name} src={i.img} />
+                </Box>
+            ))}
+            </Flex>
+            <Flex alignItems="center" justifyContent="center" w="100%" gridGap="2rem">
+            {sponsorsLine3.map((i) => (
+                <Box w={i.width} h={i.width} >
+                    <Image alt={i.name} src={i.img} />
+                </Box>
+            ))}
+            </Flex>
+          </Flex>
+          <Grid display={{ base: "grid", md: "none"}} gridTemplateColumns="repeat(1, 1fr)"  w="100%">
+            {sponsors.map((i, idx) => (
+            <GridItem key={idx} display="flex" justifyContent="center" alignItems="center">
+                <Box w={i.width} >
                     <Image alt={i.name} src={i.img} />
                 </Box>
             </GridItem>
-            ))};
+            ))}
           </Grid>
       </Flex>
       <Box w="100%" display="flex" justifyContent="center" bg="white" borderRadius="0px 0px 40px 40px">
             <Heading
             fontFamily="HKGrotesk"
             fontWeight="bold"
-            fontSize={{ base: "1rem", sm: "2rem", md: "3rem" }}
+            fontSize={{ base: "2.2rem", sm: "2rem", md: "3rem" }}
             color="black"
             textShadow="0px 4px 4px #00000040"
             textAlign="center"
@@ -175,9 +266,9 @@ export default function Event() {
         my="3rem"
       >
           <Grid gridTemplateColumns={{ base:"repeat(3, 1fr)", md:"repeat(4, 1fr)" }} gap="2rem">
-            {medpar.map((i) => (
-            <GridItem key={i}>
-                <Box display="flex" justifyContent="center" alignItems="center" bg="white" p="1rem" w={{ base: "100px", md: "150px" }}>
+            {medpar.map((i, idx) => (
+            <GridItem key={idx}>
+                <Box  display="flex" justifyContent="center" alignItems="center" bg="white" p="1rem" w={{ base: "100px", md: "150px" }}>
                     <Image alt={i.name} src={i.img} />
                 </Box>
             </GridItem>
