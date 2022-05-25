@@ -63,20 +63,20 @@ export default function Event() {
         {
           name: "Bank Indonesia",
           img: "https://firebasestorage.googleapis.com/v0/b/tedxitb-32001.appspot.com/o/partners%2Fsponsors%2Fbank-indonesia.png?alt=media&token=f32eed24-a7f2-45af-842e-16d7b5ab7c99",
-          width: 360
+          width: 380
         },
     ]
 
     const sponsorsLine2 = [
       {
         name: "ABB",
-        img: "https://firebasestorage.googleapis.com/v0/b/tedxitb-32001.appspot.com/o/partners%2Fsponsors%2FABB.png?alt=media&token=d791dbab-723b-409a-a628-4bf32070e272",
+        img: "https://firebasestorage.googleapis.com/v0/b/tedxitb-32001.appspot.com/o/partners%2Fsponsors%2FLogo%20ABB.png?alt=media&token=5932c192-fd72-4314-96a8-cabe5f65c934",
         width: 260
     },
     {
       name: "Rewindbooth",
       img: "https://firebasestorage.googleapis.com/v0/b/tedxitb-32001.appspot.com/o/partners%2Fsponsors%2FRewindbooth.png?alt=media&token=5563d780-949c-4850-a5a0-ac99f057a0a1",
-      width: 260
+      width: 280
     },
     {
       name: "Nabati",
