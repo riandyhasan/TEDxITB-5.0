@@ -14,7 +14,7 @@ import {
 } from "@chakra-ui/react";
 import XLSX from "xlsx";
 
-export default function MerchDetail({data}) {
+export default function MerchDetail({ data }) {
   const transaction = data.transaction;
 
   const formatter = Intl.NumberFormat("en-US", {

@@ -33,7 +33,17 @@ export default function Hero() {
         marginBottom="1vh"
         textAlign="center"
         fontSize={{ base: "1.5rem", sm: "1.5rem", md: "2rem" }}
-      >Get in touch with <span style={{ color: "#FF3333" }}><a href="mailto:contact.tedxitb@gmail.com" style={{ textDecoration: "none" }}>contact.tedxitb@gmail.com</a></span></Text>
+      >
+        Get in touch with{" "}
+        <span style={{ color: "#FF3333" }}>
+          <a
+            href="mailto:contact.tedxitb@gmail.com"
+            style={{ textDecoration: "none" }}
+          >
+            contact.tedxitb@gmail.com
+          </a>
+        </span>
+      </Text>
     </Flex>
   );
 }

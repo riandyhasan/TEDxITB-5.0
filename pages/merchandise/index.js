@@ -9,13 +9,13 @@ import Close from "../../components/pages/merch/Close";
 export default function MerchandisePage() {
   // const data = getMerch();
   // const dataCart = getCart();
-  return  (
+  return (
     <Layout>
       <Head>
         <title>TEDxITB 5.0 | Merchandise</title>
       </Head>
       {/* <Merch data={data} dataCart={dataCart} /> */}
-      <Close/>
+      <Close />
     </Layout>
   );
 }

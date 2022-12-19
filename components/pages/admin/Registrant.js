@@ -18,14 +18,14 @@ import {
   AlertDialogHeader,
   AlertDialogContent,
   AlertDialogOverlay,
-  Button
+  Button,
 } from "@chakra-ui/react";
 import { db } from "../../../utils/firebase";
 import { updateDoc, doc } from "firebase/firestore";
 import XLSX from "xlsx";
 import emailjs from "emailjs-com";
 
-export default function EventRegistrant({data}) {
+export default function EventRegistrant({ data }) {
   const registrant = data.registrant;
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
@@ -34,7 +34,6 @@ export default function EventRegistrant({data}) {
   const [type, setType] = useState();
   const [isITBCC, setIsITBCC] = useState(false);
   const [place, setPlace] = useState("");
-
 
   const downloadExcel = () => {
     XLSX = require("xlsx");
@@ -54,23 +53,23 @@ export default function EventRegistrant({data}) {
     setType("");
     setIsITBCC(false);
     onClose();
-  }
+  };
 
   const handleSendEmail = (id, email, type, itbcc, place) => {
     setID(id);
     setEmail(email);
     setType(type);
-    if(itbcc && itbcc != ""){
+    if (itbcc && itbcc != "") {
       setIsITBCC(true);
-    }else{
+    } else {
       setIsITBCC(false);
     }
     setPlace(place);
     onOpen();
-  }
+  };
 
-  async function sendEmail(){
-    try{
+  async function sendEmail() {
+    try {
       const docRef = doc(db, "event-registrant", id);
       await updateDoc(docRef, {
         isEmailSend: true,
@@ -78,90 +77,88 @@ export default function EventRegistrant({data}) {
       const emailBody = {
         email: email,
       };
-      if(type == "Normal" || type == "Late"){
-        if(place == "Offline"){
-          if(isITBCC){
+      if (type == "Normal" || type == "Late") {
+        if (place == "Offline") {
+          if (isITBCC) {
             emailjs
-            .send("tedxitb", "itbcc", emailBody, "EZS5gx8dMpJhiZ75f")
-            .then(
-              (result) => {
-                onClose();
-                toast({
-                  title: "Email send!",
-                  description: "The confirmation email sent successfully",
-                  status: "success",
-                  duration: 4000,
-                  isClosable: true,
-                });
-              },
-              (error) => {
-                console.log(error.text);
-              }
-            );
-          }else{
+              .send("tedxitb", "itbcc", emailBody, "EZS5gx8dMpJhiZ75f")
+              .then(
+                (result) => {
+                  onClose();
+                  toast({
+                    title: "Email send!",
+                    description: "The confirmation email sent successfully",
+                    status: "success",
+                    duration: 4000,
+                    isClosable: true,
+                  });
+                },
+                (error) => {
+                  console.log(error.text);
+                }
+              );
+          } else {
             emailjs
-            .send("tedxitb", "normal", emailBody, "xAzVAXE_gxwM2kw11")
-            .then(
-              (result) => {
-                onClose();
-                toast({
-                  title: "Email send!",
-                  description: "The confirmation email sent successfully",
-                  status: "success",
-                  duration: 4000,
-                  isClosable: true,
-                });
-              },
-              (error) => {
-                console.log(error.text);
-              }
-            );
+              .send("tedxitb", "normal", emailBody, "xAzVAXE_gxwM2kw11")
+              .then(
+                (result) => {
+                  onClose();
+                  toast({
+                    title: "Email send!",
+                    description: "The confirmation email sent successfully",
+                    status: "success",
+                    duration: 4000,
+                    isClosable: true,
+                  });
+                },
+                (error) => {
+                  console.log(error.text);
+                }
+              );
           }
-        }else if(place == "Online"){
-          if(isITBCC){
+        } else if (place == "Online") {
+          if (isITBCC) {
             emailjs
-            .send("tedxitb", "onlineitbcc", emailBody, "xAzVAXE_gxwM2kw11")
-            .then(
-              (result) => {
-                onClose();
-                toast({
-                  title: "Email send!",
-                  description: "The confirmation email sent successfully",
-                  status: "success",
-                  duration: 4000,
-                  isClosable: true,
-                });
-              },
-              (error) => {
-                console.log(error.text);
-              }
-            );
-          }else{
+              .send("tedxitb", "onlineitbcc", emailBody, "xAzVAXE_gxwM2kw11")
+              .then(
+                (result) => {
+                  onClose();
+                  toast({
+                    title: "Email send!",
+                    description: "The confirmation email sent successfully",
+                    status: "success",
+                    duration: 4000,
+                    isClosable: true,
+                  });
+                },
+                (error) => {
+                  console.log(error.text);
+                }
+              );
+          } else {
             emailjs
-            .send("tedxitb", "online", emailBody, "EZS5gx8dMpJhiZ75f")
-            .then(
-              (result) => {
-                onClose();
-                toast({
-                  title: "Email send!",
-                  description: "The confirmation email sent successfully",
-                  status: "success",
-                  duration: 4000,
-                  isClosable: true,
-                });
-              },
-              (error) => {
-                console.log(error.text);
-              }
-            );
+              .send("tedxitb", "online", emailBody, "EZS5gx8dMpJhiZ75f")
+              .then(
+                (result) => {
+                  onClose();
+                  toast({
+                    title: "Email send!",
+                    description: "The confirmation email sent successfully",
+                    status: "success",
+                    duration: 4000,
+                    isClosable: true,
+                  });
+                },
+                (error) => {
+                  console.log(error.text);
+                }
+              );
           }
         }
-
-      }else{
-
+      } else {
       }
-    }catch(e){
-      console.log(e)
+    } catch (e) {
+      console.log(e);
     }
   }
 
@@ -170,29 +167,25 @@ export default function EventRegistrant({data}) {
   let normal = 0;
   let earlybird = 0;
 
-  registrant?.map((i) =>{
-    if(i.ticketType == "Online"){
+  registrant?.map((i) => {
+    if (i.ticketType == "Online") {
       online += 1;
-    }else if(i.ticketType == "Offline"){
+    } else if (i.ticketType == "Offline") {
       offline += 1;
     }
-    if(i.ticketWave == "Early Bird" || i.ticketWave == "Early bird"){
+    if (i.ticketWave == "Early Bird" || i.ticketWave == "Early bird") {
       earlybird += 1;
-    }else if(i.ticketWave == "Normal"){
+    } else if (i.ticketWave == "Normal") {
       normal += 1;
     }
-  })
-
+  });
 
   return (
     <>
-          <AlertDialog
-        isOpen={isOpen}
-        onClose={onClose}
-      >
+      <AlertDialog isOpen={isOpen} onClose={onClose}>
         <AlertDialogOverlay>
           <AlertDialogContent>
-            <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+            <AlertDialogHeader fontSize="lg" fontWeight="bold">
               Send Email
             </AlertDialogHeader>
 
@@ -201,61 +194,64 @@ export default function EventRegistrant({data}) {
             </AlertDialogBody>
 
             <AlertDialogFooter>
-              <Button  onClick={handleClose}>
-                Cancel
-              </Button>
-              <Button colorScheme='red' onClick={sendEmail} ml={3}>
+              <Button onClick={handleClose}>Cancel</Button>
+              <Button colorScheme="red" onClick={sendEmail} ml={3}>
                 Send
               </Button>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialogOverlay>
       </AlertDialog>
-    <Flex w="80%" minH="80vh" flexDir="column">
-      <Flex w="100%" justifyContent="space-between" alignItems="center" my="1rem">
-        <Box color="brand.tedred">
-          <Text>Total Registrants: {registrant ? registrant.length : 0}</Text>
-          <Flex gridGap="1rem"> 
-            <Text>Offline: {offline}</Text>
-            <Text>Online: {online}</Text>
-          </Flex>
-          <Flex gridGap="1rem"> 
-            <Text>Early Bird: {earlybird}</Text>
-            <Text>Normal: {normal}</Text>
-          </Flex>
-        </Box>
-        <Box
-          color="white"
-          bg="brand.gradientRed"
-          fontWeight="bold"
-          borderRadius="19px"
-          px="3rem"
-          py="0.4rem"
-          cursor="pointer"
-          fontSize="0.85em"
-          onClick={downloadExcel}
+      <Flex w="80%" minH="80vh" flexDir="column">
+        <Flex
+          w="100%"
+          justifyContent="space-between"
+          alignItems="center"
+          my="1rem"
         >
-          Download Data
-        </Box>
-      </Flex>
-      <Box
-        overflowX="auto"
-        overflowY="auto"
-        maxH="60vh"
-        whiteSpace="nowrap"
-        display="inline-block"
-      >
-        <Table>
-          <Thead>
-            <Th>Email</Th>
-            <Th>Name</Th>
-            {/* <Th>Address</Th>
+          <Box color="brand.tedred">
+            <Text>Total Registrants: {registrant ? registrant.length : 0}</Text>
+            <Flex gridGap="1rem">
+              <Text>Offline: {offline}</Text>
+              <Text>Online: {online}</Text>
+            </Flex>
+            <Flex gridGap="1rem">
+              <Text>Early Bird: {earlybird}</Text>
+              <Text>Normal: {normal}</Text>
+            </Flex>
+          </Box>
+          <Box
+            color="white"
+            bg="brand.gradientRed"
+            fontWeight="bold"
+            borderRadius="19px"
+            px="3rem"
+            py="0.4rem"
+            cursor="pointer"
+            fontSize="0.85em"
+            onClick={downloadExcel}
+          >
+            Download Data
+          </Box>
+        </Flex>
+        <Box
+          overflowX="auto"
+          overflowY="auto"
+          maxH="60vh"
+          whiteSpace="nowrap"
+          display="inline-block"
+        >
+          <Table>
+            <Thead>
+              <Th>Email</Th>
+              <Th>Name</Th>
+              {/* <Th>Address</Th>
             <Th>Phone</Th>
             <Th>Occupation</Th>
             <Th>Institution</Th> */}
-            <Th>Ticket Type</Th>
-            <Th>Ticket Wave</Th>
-            {/* <Th>Are you fully vaccinated by third dose/booster?</Th>
+              <Th>Ticket Type</Th>
+              <Th>Ticket Wave</Th>
+              {/* <Th>Are you fully vaccinated by third dose/booster?</Th>
             <Th>Where did you find out about this event?</Th>
             <Th>
               What are your reasons and expectations for coming to TEDxITB?
@@ -264,70 +260,74 @@ export default function EventRegistrant({data}) {
               How do you want to utilize the ideas you get from TEDxITB to
               others?
             </Th> */}
-            <Th>
-            Committee Referree Name
-            </Th>
-            <Th>
-              ITB Career Center Proof
-            </Th>
-            <Th>
-              Action
-            </Th>
-          </Thead>
-          <Tbody>
-            {registrant && registrant.length ? (
-              registrant.map((i) => (
-                <Tr>
-                  <Td>{i.email}</Td>
-                  <Td>{i.name}</Td>
-                  {/* <Td>{i.address}</Td> */}
-                  {/* <Td>{i.phone}</Td> */}
-                  {/* <Td>{i.occupation}</Td> */}
-                  {/* <Td>{i.institution}</Td> */}
-                  <Td>{i.ticketType}</Td>
-                  <Td>{i.ticketWave}</Td>
-                  {/* <Td>{i.vaccinated}</Td> */}
-                  {/* <Td>{i.findEvent}</Td> */}
-                  {/* <Td>{i.reasonQuestion}</Td> */}
-                  {/* <Td>{i.spreadingQuestion}</Td> */}
-                  <Td>{i.committeeReferral ? i.committeeReferral : "-"}</Td>
-                  <Td color="red">
-                  {i.careerCenterProof ?
-                    <a href={i.careerCenterProof} target="_blank">
-                      Proof
-                    </a>
-                    : "-"
-                  }
-                  </Td>
-                  <Td>
-                  {i.isEmailSend ?
-                  <Text color="brand.tedred" textAlign="center">Sent</Text>
-                  :
-                  <Box
-                    color="white"
-                    bg="brand.gradientRed"
-                    fontWeight="bold"
-                    borderRadius="19px"
-                    px="3rem"
-                    py="0.4rem"
-                    cursor="pointer"
-                    fontSize="0.85em"
-                    onClick={() => handleSendEmail(i.id, i.email, i.ticketWave, i.careerCenterProof, i.ticketType)}
-                  >
-                    Send Email
-                  </Box>
-                  }
-                  </Td>
-                </Tr>
-              ))
-            ) : (
-              <Heading>No Registrant</Heading>
-            )}
-          </Tbody>
-        </Table>
-      </Box>
-    </Flex>
+              <Th>Committee Referree Name</Th>
+              <Th>ITB Career Center Proof</Th>
+              <Th>Action</Th>
+            </Thead>
+            <Tbody>
+              {registrant && registrant.length ? (
+                registrant.map((i) => (
+                  <Tr>
+                    <Td>{i.email}</Td>
+                    <Td>{i.name}</Td>
+                    {/* <Td>{i.address}</Td> */}
+                    {/* <Td>{i.phone}</Td> */}
+                    {/* <Td>{i.occupation}</Td> */}
+                    {/* <Td>{i.institution}</Td> */}
+                    <Td>{i.ticketType}</Td>
+                    <Td>{i.ticketWave}</Td>
+                    {/* <Td>{i.vaccinated}</Td> */}
+                    {/* <Td>{i.findEvent}</Td> */}
+                    {/* <Td>{i.reasonQuestion}</Td> */}
+                    {/* <Td>{i.spreadingQuestion}</Td> */}
+                    <Td>{i.committeeReferral ? i.committeeReferral : "-"}</Td>
+                    <Td color="red">
+                      {i.careerCenterProof ? (
+                        <a href={i.careerCenterProof} target="_blank">
+                          Proof
+                        </a>
+                      ) : (
+                        "-"
+                      )}
+                    </Td>
+                    <Td>
+                      {i.isEmailSend ? (
+                        <Text color="brand.tedred" textAlign="center">
+                          Sent
+                        </Text>
+                      ) : (
+                        <Box
+                          color="white"
+                          bg="brand.gradientRed"
+                          fontWeight="bold"
+                          borderRadius="19px"
+                          px="3rem"
+                          py="0.4rem"
+                          cursor="pointer"
+                          fontSize="0.85em"
+                          onClick={() =>
+                            handleSendEmail(
+                              i.id,
+                              i.email,
+                              i.ticketWave,
+                              i.careerCenterProof,
+                              i.ticketType
+                            )
+                          }
+                        >
+                          Send Email
+                        </Box>
+                      )}
+                    </Td>
+                  </Tr>
+                ))
+              ) : (
+                <Heading>No Registrant</Heading>
+              )}
+            </Tbody>
+          </Table>
+        </Box>
+      </Flex>
     </>
-
   );
 }

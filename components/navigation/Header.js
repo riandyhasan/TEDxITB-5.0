@@ -25,7 +25,7 @@ const LINKS = [
     name: "Event",
     path: "/event",
   },
-  
+
   {
     name: "Partners",
     path: "/partner",

@@ -299,8 +299,7 @@ export default function MerchForm({ data, user }) {
         );
       cart?.map((i) => deleteItem(i.id));
       router.push("/");
-    } catch (e) {
-    }
+    } catch (e) {}
   };
 
   const checkout = async () => {

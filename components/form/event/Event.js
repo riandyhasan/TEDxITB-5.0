@@ -28,13 +28,13 @@ import {
   AlertDialogContent,
   AlertDialogOverlay,
   Button,
-  Center
+  Center,
 } from "@chakra-ui/react";
 import { db } from "../../../utils/firebase";
 import { setDoc, doc } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useRouter } from "next/router";
-import { AiFillCloseCircle } from "react-icons/ai";;
+import { AiFillCloseCircle } from "react-icons/ai";
 import { BsUpload } from "react-icons/bs";
 import { useDropzone } from "react-dropzone";
 import emailjs from "emailjs-com";
@@ -74,11 +74,11 @@ export default function RegisterEvent({ user, registrant }) {
   const cancelRef = React.useRef();
 
   const { acceptedFiles, fileRejections, getRootProps, getInputProps } =
-  useDropzone({
-    accept: "image/jpeg,image/png",
-    multiple: false,
-    maxSize: 10097152,
-  });
+    useDropzone({
+      accept: "image/jpeg,image/png",
+      multiple: false,
+      maxSize: 10097152,
+    });
 
   function WordCount(str) {
     return str.split(" ").length;
@@ -94,9 +94,9 @@ export default function RegisterEvent({ user, registrant }) {
       find = "LINE/Whatsapp Broadcast";
     } else if (findEvent == "4") {
       find = "ITB Career Center Participant";
-    }else if (findEvent == "5"){
+    } else if (findEvent == "5") {
       find = "Committee Referral";
-    }else if (findEvent == "6"){
+    } else if (findEvent == "6") {
       find = findEventOther;
     }
     return find;
@@ -107,17 +107,17 @@ export default function RegisterEvent({ user, registrant }) {
     if (WordCount(reasons) > 100 || WordCount(spread) > 100) {
       err = "Opinion questions max 100 words!";
     }
-    if(findEvent == "4"){
+    if (findEvent == "4") {
       if (!acceptedFiles || acceptedFiles.length < 1) {
         err = "Participating proof is required";
       }
     }
-    if(findEvent == "5"){
-      if(referral == ""){
+    if (findEvent == "5") {
+      if (referral == "") {
         err = "Committee referree full name is required";
       }
     }
-    if(findEvent != "4" && findEvent != "5"){
+    if (findEvent != "4" && findEvent != "5") {
       if (reasons == "" || spread == "") {
         err = "Opinion questions are required";
       }
@@ -167,51 +167,63 @@ export default function RegisterEvent({ user, registrant }) {
           ticketWave = "Late";
         }
         const find = findEventValue();
-        if(findEvent == "4"){
+        if (findEvent == "4") {
           const storage = getStorage();
-          const storageRef = ref(storage, `registrant/ITB-Career-Center/${name}.jpg`);
+          const storageRef = ref(
+            storage,
+            `registrant/ITB-Career-Center/${name}.jpg`
+          );
           uploadBytes(storageRef, acceptedFiles[0]).then((snapshot) => {
-            getDownloadURL(ref(storage, `registrant/ITB-Career-Center/${name}.jpg`)).then(
-              async function (url) {
-                try{
-                  await setDoc(doc(db, "event-registrant", user.userID), {
-                    name: name,
-                    email: email,
-                    address: address,
-                    phone: phone,
-                    occupation: occupation,
-                    institution: institution,
-                    findEvent: find,
-                    ticketType: ticketType == "1" ? "Offline" : "Online",
-                    ticketWave: ticketWave,
-                    vaccinated:
-                      ticketType == "2" ? "Online" : vaccinated == "1" ? "Yes" : "No",
-                    reasonQuestion: "-",
-                    spreadingQuestion: "-",
-                    careerCenterProof: url,
-                  });
-                  const emailBody = {
-                    email: email,
-                    name: name,
-                  };
-                  emailjs
-                    .send("tedxitb5.0", "tedxitb5", emailBody, "QUWx86By2g9osljF4")
-                    .then(
-                      (result) => {
-                        console.log(result.text);
-                      },
-                      (error) => {
-                        console.log(error.text);
-                      }
-                    );
-                  onOpenModal();
-                }catch(e){
-                  // console.log(e);
-                }
+            getDownloadURL(
+              ref(storage, `registrant/ITB-Career-Center/${name}.jpg`)
+            ).then(async function (url) {
+              try {
+                await setDoc(doc(db, "event-registrant", user.userID), {
+                  name: name,
+                  email: email,
+                  address: address,
+                  phone: phone,
+                  occupation: occupation,
+                  institution: institution,
+                  findEvent: find,
+                  ticketType: ticketType == "1" ? "Offline" : "Online",
+                  ticketWave: ticketWave,
+                  vaccinated:
+                    ticketType == "2"
+                      ? "Online"
+                      : vaccinated == "1"
+                      ? "Yes"
+                      : "No",
+                  reasonQuestion: "-",
+                  spreadingQuestion: "-",
+                  careerCenterProof: url,
+                });
+                const emailBody = {
+                  email: email,
+                  name: name,
+                };
+                emailjs
+                  .send(
+                    "tedxitb5.0",
+                    "tedxitb5",
+                    emailBody,
+                    "QUWx86By2g9osljF4"
+                  )
+                  .then(
+                    (result) => {
+                      console.log(result.text);
+                    },
+                    (error) => {
+                      console.log(error.text);
+                    }
+                  );
+                onOpenModal();
+              } catch (e) {
+                // console.log(e);
               }
-            );
+            });
           });
-        }else if(findEvent == "5"){
+        } else if (findEvent == "5") {
           await setDoc(doc(db, "event-registrant", user.userID), {
             name: name,
             email: email,
@@ -226,7 +238,7 @@ export default function RegisterEvent({ user, registrant }) {
               ticketType == "2" ? "Online" : vaccinated == "1" ? "Yes" : "No",
             reasonQuestion: "-",
             spreadingQuestion: "-",
-            committeeReferral: referral
+            committeeReferral: referral,
           });
           const emailBody = {
             email: email,
@@ -243,7 +255,7 @@ export default function RegisterEvent({ user, registrant }) {
               }
             );
           onOpenModal();
-        }else{
+        } else {
           await setDoc(doc(db, "event-registrant", user.userID), {
             name: name,
             email: email,
@@ -396,36 +408,36 @@ export default function RegisterEvent({ user, registrant }) {
           justifyContent="space-evenly"
         >
           {/* {submitted ? ( */}
-            <Flex
-              w="100%"
-              align="center"
-              justify="center"
-              gridGap="2rem"
-              flexDir="column"
+          <Flex
+            w="100%"
+            align="center"
+            justify="center"
+            gridGap="2rem"
+            flexDir="column"
+          >
+            <Heading
+              fontFamily="HKGrotesk"
+              fontWeight="bold"
+              fontSize="2em"
+              color="black"
+              textShadow="0px 4px 4px #00000040"
+              textAlign="center"
             >
-              <Heading
-                fontFamily="HKGrotesk"
-                fontWeight="bold"
-                fontSize="2em"
-                color="black"
-                textShadow="0px 4px 4px #00000040"
-                textAlign="center"
-              >
-                Sorry, registration closed.
-              </Heading>
-              <AiFillCloseCircle size="10em" color="#E62B1E" />
-              <Heading
-                fontFamily="HKGrotesk"
-                fontWeight="bold"
-                fontSize="1.5em"
-                color="black"
-                textAlign="center"
-              >
-                Thank you for your enthusiasm.
-              </Heading>
-            </Flex>
-         {/* ) : ( */}
-             {/* <>
+              Sorry, registration closed.
+            </Heading>
+            <AiFillCloseCircle size="10em" color="#E62B1E" />
+            <Heading
+              fontFamily="HKGrotesk"
+              fontWeight="bold"
+              fontSize="1.5em"
+              color="black"
+              textAlign="center"
+            >
+              Thank you for your enthusiasm.
+            </Heading>
+          </Flex>
+          {/* ) : ( */}
+          {/* <>
                <Heading
                 fontFamily="HKGrotesk"
                 fontWeight="bold"
@@ -789,6 +801,6 @@ export default function RegisterEvent({ user, registrant }) {
           )} */}
         </Flex>
       </Flex>
-    </> 
+    </>
   );
 }

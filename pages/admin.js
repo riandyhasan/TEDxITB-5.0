@@ -23,7 +23,10 @@ export default function AdminPage() {
     }
   }, []);
 
-  return user.data && !user.loading && !registrant.loading && !transaction.loading ? (
+  return user.data &&
+    !user.loading &&
+    !registrant.loading &&
+    !transaction.loading ? (
     <Layout>
       <Head>
         <title>TEDxITB 5.0 | Admin</title>

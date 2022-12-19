@@ -88,14 +88,14 @@ const AboutSection = () => {
             </Text>
           </Box>
         </Flex>
-        <Flex
-          direction="column"
-          py="40px"
-          alignItems="center"
-        >
-          <Box flex="1" px="5px" maxW={{ base:"100%", md:"60%"}}>
-            <a href="https://virtualfair.itb.ac.id/" target="_blank" style={{ textDecoration: "none" }}>
-            <Image src="/assets/images/poster/banner.jpg" cursor="pointer"/>
+        <Flex direction="column" py="40px" alignItems="center">
+          <Box flex="1" px="5px" maxW={{ base: "100%", md: "60%" }}>
+            <a
+              href="https://virtualfair.itb.ac.id/"
+              target="_blank"
+              style={{ textDecoration: "none" }}
+            >
+              <Image src="/assets/images/poster/banner.jpg" cursor="pointer" />
             </a>
           </Box>
           <Box flex="3" px="20px" mt="1rem">
@@ -106,14 +106,19 @@ const AboutSection = () => {
               color="#000000"
               textAlign="justify"
             >
-              This year, we collaborate with ITB Career Cente's 2022 
-              Virtual Integrated Career Days to help our audience in 
-              pursuing their dreams. Click the banner above or visit {" "}
+              This year, we collaborate with ITB Career Cente's 2022 Virtual
+              Integrated Career Days to help our audience in pursuing their
+              dreams. Click the banner above or visit{" "}
               <span>
-              <a href="https://virtualfair.itb.ac.id/" target="_blank" style={{ textDecoration: "none", color:"#E62B1E" }}>
-              virtualfair.itb.ac.id
-              </a>
-              </span> for more information
+                <a
+                  href="https://virtualfair.itb.ac.id/"
+                  target="_blank"
+                  style={{ textDecoration: "none", color: "#E62B1E" }}
+                >
+                  virtualfair.itb.ac.id
+                </a>
+              </span>{" "}
+              for more information
             </Text>
           </Box>
         </Flex>
